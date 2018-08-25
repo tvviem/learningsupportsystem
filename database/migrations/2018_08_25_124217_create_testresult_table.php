@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateTestresultTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('testresult', function (Blueprint $table) {
+            $table->integer('user_id')->unsigned(); // ID nguoi dung (sinh vien)
+            $table->integer('testcode_id')->unsigned(); // ID bo de
+            $table->float('result', 2, 2)->nullable(); // khi tham gia chua ghi nhan ket qua
+
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('testcode_id')->references('id')->on('testcode');
+            $table->index(['user_id', 'testcode_id']);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('testresult');
+    }
+}
