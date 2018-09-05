@@ -16,7 +16,7 @@ class CreateChoicesTable extends Migration
         // Bieu dien tap cac phuong an chon lua
         Schema::create('choices', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('choice_content', 800);
+            $table->string('choice_content', 300);
             $table->boolean('is_correct_choice');
             $table->integer('question_id')->unsigned(); // ID cau hoi
 

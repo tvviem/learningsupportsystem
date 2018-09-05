@@ -15,7 +15,7 @@ class CreateResourcesTable extends Migration
     {
         Schema::create('resources', function (Blueprint $table) {
             $table->integer('branch_id')->unsigned(); // ID Nhanh kien thuc
-            $table->integer('doc_id')->unsigned(); // ID Nhanh kien thuc
+            $table->integer('doc_id')->unsigned(); // ID tai lieu
             $table->integer('employee_id')->unsigned(); // ID nguoi cap nhat
 
             $table->foreign('branch_id')->references('id')->on('branches');

@@ -15,9 +15,8 @@ class CreateLevelsTable extends Migration
     {
         Schema::create('levels', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('level', 20)->unique(); // Muc do: de, kho, vua, cuc kho
+            $table->string('level', 15)->unique(); // Muc do: de, kho, vua, cuc kho
             $table->string('level_description', 80)->nullable();
-            $table->timestamps();
         });
     }
 

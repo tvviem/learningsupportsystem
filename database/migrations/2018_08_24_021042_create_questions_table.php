@@ -15,7 +15,7 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('content', 3999);
+            $table->string('content', 900); // max ~ 20000 char
             $table->boolean('is_actived')->nullable($value = false);
             
             $table->integer('branch_id')->unsigned(); // ID Nhanh kien thuc

@@ -16,12 +16,9 @@ class CreateAuthorsTable extends Migration
         Schema::create('authors', function (Blueprint $table) {
             $table->increments('id');
             $table->string('first_name', 20); // Vinh Viem
-            $table->string('middle_name', 20)->nullable(); // Vinh
             $table->string('last_name', 20); // Trieu
-            $table->string('email', 80)->unique(); // email author
+            $table->string('email', 80)->nullable(); // email author
             $table->string('work_at', 80)->nullable();
-            
-            $table->timestamps();
         });
     }
 

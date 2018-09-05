@@ -15,12 +15,12 @@ class CreateDocumentsTable extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('doc_name', 80); // Tua de tai lieu
-            $table->string('doc_type', 40); // loai tai lieu: bai giang, giao trinh, sach
+            $table->string('doc_name', 60); // Tua de tai lieu
+            $table->string('doc_type', 30); // loai tai lieu: bai giang, giao trinh, sach
             $table->integer('publish_year')->unsigned();
             $table->integer('page_number')->unsigned(); // So trang giup phan biet tai lieu
             $table->string('url_download', 200); // URL tu cac o dia truc tuyen
-            $table->string('cover_page', 80); // ten tap tin hinh anh bia cua tai lieu
+            $table->string('file_cover', 40); // ten tap tin hinh anh bia cua tai lieu
             $table->integer('employee_id')->unsigned(); // Nguoi cung cap tai lieu
 
             $table->foreign('employee_id')->references('id')->on('employees');

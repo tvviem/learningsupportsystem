@@ -16,8 +16,7 @@ class CreateTypesTable extends Migration
         Schema::create('types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('type_name', 30)->unique(); // Trac nghiem, cau hon nhieu hon 1 phuong an
-            $table->string('type_description', 80)->nullable();
-            $table->timestamps();
+            $table->string('type_description', 60)->nullable();
         });
     }
 

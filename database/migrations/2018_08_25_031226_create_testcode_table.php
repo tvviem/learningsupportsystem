@@ -13,14 +13,16 @@ class CreateTestcodeTable extends Migration
      */
     public function up()
     {
-        // Bieu dien tap cac bo de kiem tra, bao gom cac cau hoi chua kich hoat (sinh vien chua lam)
+        // Bieu dien tap cac bo de kiem tra, bao gom cac cau hoi chua kich hoat
+        // Bộ đề do giảng viên tạo, chỉ có họ mới biết mật mã mở đề
         Schema::create('testcode', function (Blueprint $table) {
             $table->increments('id');
             $table->char('code', 16)->unique(); // Ma bo de
             $table->tinyInteger('num_of_question', 2);
-            $table->char('list_question_id', 64); // Ma hoa cac question_id trong bo de
-            // Ma kich hoat giai ma list_question_id; ma nay se duoc ma hoa
-            $table->char('code_active', 64);
+            $table->char('encode_list_id', 64); // Ma hoa cac question_id trong bo de
+            // tạo ngẫu nhiên như salt (code_rand) và kết hợp với mật mã
+            // của giảng viên cung cấp khi tạo đề, Dùng để giải mã list_question_id
+            $table->binary('salt', 32); 
             $table->tinyInteger('duration', 2); // Thoi gian lam bai cua bo de
             
             $table->integer('employee_id')->unsigned(); // Nguoi ra bo de kiem tra

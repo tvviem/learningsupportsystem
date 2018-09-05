@@ -20,7 +20,6 @@ class CreateAuthorofdocTable extends Migration
             $table->foreign('doc_id')->references('id')->on('documents');
             $table->foreign('author_id')->references('id')->on('authors');
             $table->index(['doc_id', 'author_id']);
-            $table->timestamps();
         });
     }
 
