@@ -21,9 +21,9 @@ class CreateDocumentsTable extends Migration
             $table->integer('page_number')->unsigned(); // So trang giup phan biet tai lieu
             $table->string('url_download', 200); // URL tu cac o dia truc tuyen
             $table->string('file_cover', 40); // ten tap tin hinh anh bia cua tai lieu
-            $table->integer('employee_id')->unsigned(); // Nguoi cung cap tai lieu
+            $table->integer('user_id')->unsigned(); // Nguoi cung cap tai lieu
 
-            $table->foreign('employee_id')->references('id')->on('employees');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

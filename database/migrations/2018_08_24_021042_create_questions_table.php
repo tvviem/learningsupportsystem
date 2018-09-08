@@ -19,15 +19,16 @@ class CreateQuestionsTable extends Migration
             $table->boolean('is_actived')->nullable($value = false);
             
             $table->integer('branch_id')->unsigned(); // ID Nhanh kien thuc
-            $table->integer('type_id')->unsigned(); // ID Loai cau hoi
             $table->integer('level_id')->unsigned(); // ID muc do kho, de
-            $table->integer('employee_id')->unsigned(); // Nguoi ra cau hoi
+            $table->integer('type_id')->unsigned(); // ID Loai cau hoi
+            $table->integer('user_id')->unsigned(); // Nguoi ra cau hoi
             
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('branch_id')->references('id')->on('branches');
-            $table->foreign('type_id')->references('id')->on('types');
             $table->foreign('level_id')->references('id')->on('levels');
-            $table->foreign('employee_id')->references('id')->on('employees');
+            $table->foreign('type_id')->references('id')->on('types');
 
+            $table->index(['branch_id', 'level_id', 'type_id', 'user_id']);
             $table->timestamps();
         });
     }

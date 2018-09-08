@@ -16,12 +16,12 @@ class CreateResourcesTable extends Migration
         Schema::create('resources', function (Blueprint $table) {
             $table->integer('branch_id')->unsigned(); // ID Nhanh kien thuc
             $table->integer('doc_id')->unsigned(); // ID tai lieu
-            $table->integer('employee_id')->unsigned(); // ID nguoi cap nhat
+            $table->integer('user_id')->unsigned(); // ID nguoi cap nhat
 
             $table->foreign('branch_id')->references('id')->on('branches');
             $table->foreign('doc_id')->references('id')->on('documents');
-            $table->foreign('employee_id')->references('id')->on('employees');
-            $table->index(['branch_id', 'doc_id', 'employee_id']);
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->index(['branch_id', 'doc_id', 'user_id']);
 
             $table->timestamps();
         });
