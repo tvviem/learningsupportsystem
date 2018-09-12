@@ -13,6 +13,7 @@ class CreateResourcesTable extends Migration
      */
     public function up()
     {
+        // Ghi nhận các tài liệu hỗ trợ cho một nhánh kiến thức
         Schema::create('resources', function (Blueprint $table) {
             $table->integer('branch_id')->unsigned(); // ID Nhanh kien thuc
             $table->integer('doc_id')->unsigned(); // ID tai lieu
@@ -21,7 +22,7 @@ class CreateResourcesTable extends Migration
             $table->foreign('branch_id')->references('id')->on('branches');
             $table->foreign('doc_id')->references('id')->on('documents');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->index(['branch_id', 'doc_id', 'user_id']);
+            $table->index(['branch_id', 'doc_id']);
 
             $table->timestamps();
         });

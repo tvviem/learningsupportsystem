@@ -13,14 +13,15 @@ class CreateTestresultTable extends Migration
      */
     public function up()
     {
-        Schema::create('testresult', function (Blueprint $table) {
+        // Ghi nhận kết quả sau cùng của sinh viên
+        Schema::create('test_result', function (Blueprint $table) {
             $table->integer('user_id')->unsigned(); // ID nguoi dung (sinh vien)
-            $table->integer('testcode_id')->unsigned(); // ID bo de
+            $table->integer('test_code_id')->unsigned(); // ID bo de
             $table->float('result', 2, 2)->nullable(); // khi tham gia chua ghi nhan ket qua
 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('testcode_id')->references('id')->on('testcode');
-            $table->index(['user_id', 'testcode_id']);
+            $table->foreign('test_code_id')->references('id')->on('test_code');
+            $table->index(['user_id', 'test_code_id']);
             $table->timestamps();
         });
     }

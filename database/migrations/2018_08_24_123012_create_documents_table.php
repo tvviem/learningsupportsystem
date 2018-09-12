@@ -13,6 +13,7 @@ class CreateDocumentsTable extends Migration
      */
     public function up()
     {
+        // Tài liệu hỗ trợ học tập
         Schema::create('documents', function (Blueprint $table) {
             $table->increments('id');
             $table->string('doc_name', 60); // Tua de tai lieu
@@ -20,7 +21,7 @@ class CreateDocumentsTable extends Migration
             $table->integer('publish_year')->unsigned();
             $table->integer('page_number')->unsigned(); // So trang giup phan biet tai lieu
             $table->string('url_download', 200); // URL tu cac o dia truc tuyen
-            $table->string('file_cover', 40); // ten tap tin hinh anh bia cua tai lieu
+            $table->string('file_cover', 40)->nullable(); // ten tap tin hinh anh bia cua tai lieu
             $table->integer('user_id')->unsigned(); // Nguoi cung cap tai lieu
 
             $table->foreign('user_id')->references('id')->on('users');

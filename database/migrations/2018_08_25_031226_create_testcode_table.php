@@ -15,15 +15,11 @@ class CreateTestcodeTable extends Migration
     {
         // Bieu dien tap cac bo de kiem tra, bao gom cac cau hoi chua kich hoat
         // Bộ đề do giảng viên tạo, chỉ có họ mới biết mật mã mở đề
-        Schema::create('testcode', function (Blueprint $table) {
+        Schema::create('test_code', function (Blueprint $table) {
             $table->increments('id');
             $table->char('code', 16)->unique(); // Ma bo de
             $table->tinyInteger('num_of_question');
-            $table->string('encode_list_id', 100); // Ma hoa cac question_id trong bo de
-            // tạo ngẫu nhiên như salt (code_rand) và kết hợp với mật mã
-            // của giảng viên cung cấp khi tạo đề, Dùng để giải mã list_question_id
-            $table->binary('salt', 32); // RandomSalt + user' key -> Encrypt with AES-256-CBC
-            // want join to test; DESCRYPT
+            $table->string('encode_list_id', 500); // Ma hoa cac question_id trong bo de
             $table->tinyInteger('duration'); // Thoi gian lam bai cua bo de
             
             $table->integer('user_id')->unsigned(); // Giang vien ra bo de kiem tra

@@ -13,13 +13,13 @@ class CreateAuthorofdocTable extends Migration
      */
     public function up()
     {
-        Schema::create('authorofdoc', function (Blueprint $table) {
+        Schema::create('author_of_doc', function (Blueprint $table) {
             $table->integer('doc_id')->unsigned(); // ID tai lieu
             $table->integer('author_id')->unsigned(); // ID tac gia
 
             $table->foreign('doc_id')->references('id')->on('documents');
             $table->foreign('author_id')->references('id')->on('authors');
-            $table->index(['doc_id', 'author_id']);
+            $table->primary(['doc_id', 'author_id']);
         });
     }
 

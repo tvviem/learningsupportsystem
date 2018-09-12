@@ -13,14 +13,14 @@ class CreateBranchesTable extends Migration
      */
     public function up()
     {
-        // Nhom kien thuc trong linh vuc
+        // Các nhánh kien thuc trong linh vuc kiến thức
         Schema::create('branches', function (Blueprint $table) {
             $table->increments('id');
             $table->string('branch_name', 60)->unique();
             $table->string('branch_description', 120)->nullable();
             $table->integer('field_id')->unsigned();
 
-            $table->foreign('field_id')->references('id')->on('levels');
+            $table->foreign('field_id')->references('id')->on('fields');
             $table->timestamps();
         });
     }

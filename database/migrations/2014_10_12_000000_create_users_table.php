@@ -16,11 +16,11 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('username', 40)->unique(); // Tên đăng nhập
-            $table->string('email', 80)->unique(); // cũng có thể dùng email đăng nhập
+            $table->string('email', 100)->unique(); // cũng có thể dùng email đăng nhập
             $table->string('password', 80); // have built-in bcrypt in laravel
             $table->boolean('is_actived')->default(false); // Kích hoạt chưa
 
-            $table->string('code', 15)->nullable(); // Mã sinh viên hoặc mã giảng viên
+            $table->string('code', 14)->nullable(); // Mã sinh viên hoặc mã giảng viên
             $table->string('first_name', 45); // tên đệm và tên: Vĩnh Viêm
             $table->string('last_name', 15); // họ: Trieu
             $table->string('work_place', 40)->nullable(); // họ: noi cong tac hoac lop

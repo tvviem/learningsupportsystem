@@ -13,9 +13,11 @@ class CreateTypesTable extends Migration
      */
     public function up()
     {
+        // Phân loại câu hỏi: trắc nghiệm 1 phương án/hoặc nhiều phương án,
+        //                  true/false, so khớp (matches)
         Schema::create('types', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('type_name', 30)->unique(); // Trac nghiem, cau hon nhieu hon 1 phuong an
+            $table->string('type_name', 30)->unique();
             $table->string('type_description', 60)->nullable();
         });
     }

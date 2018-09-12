@@ -13,6 +13,7 @@ class CreateFieldsTable extends Migration
      */
     public function up()
     {
+        // Các lĩnh vực kiến thức
         Schema::create('fields', function (Blueprint $table) {
             $table->increments('id');
             $table->string('field_name', 40)->unique();
