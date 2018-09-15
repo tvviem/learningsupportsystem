@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('first_name', 45); // tên đệm và tên: Vĩnh Viêm
             $table->string('last_name', 15); // họ: Trieu
             $table->string('work_place', 40)->nullable(); // họ: noi cong tac hoac lop
-            $table->string('path_avatar', 80)->nullable(); // Tên tập tin hình ảnh
+            $table->string('path_avatar', 80)->default('profile.png'); // Tên tập tin hình ảnh
 
             /* $table->integer('role_id')->unsigned();
             $table->foreign('role_id')->references('id')->on('roles'); */

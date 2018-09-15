@@ -14,9 +14,11 @@ Vue.use(VueRouter)
 
 let routes = [
     { path: '/dashboard', component: require('./components/Dashboard.vue') },
+    { path: '/users', component: require('./components/Users.vue') },
     { path: '/profile', component: require('./components/Profile.vue') }
 ]
 const router = new VueRouter({
+    mode: 'hash',
     routes // short for `routes: routes`
 })
 /**
@@ -25,7 +27,7 @@ const router = new VueRouter({
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+/* Vue.component('example-component', require('./components/ExampleComponent.vue')); */
 
 const app = new Vue({
     el: '#app',
