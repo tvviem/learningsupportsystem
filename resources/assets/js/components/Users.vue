@@ -22,24 +22,26 @@
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Workplace</th>
-                    <th>Type</th>
+                    <th>Created_at</th>
                     <th>Status</th>
                     <th>Modify</th>
                   </tr>
-                  <tr>
-                    <td>183</td>
-                    <td>tvviem</td>
-                    <td>tvviem@blu.edu.vn</td>
-                    <td><input type="checkbox" id="actived" value="1"/></td>
-                    <td>Vinh Viem</td>
-                    <td>Trieu</td>
-                    <td>Khoa CNTT</td>
-                    <td>Admin</td>
-                    <td><span class="tag tag-success">Approved</span></td>
+                  <tr v-for="user in users" :key="user.id">
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username | upText }}</td>
+                    <td>{{ user.email }}</td>
+                    <td><input type="checkbox" v-model="user.is_actived" /></td>
+                    <td>{{ user.first_name }}</td>
+                    <td>{{ user.last_name }}</td>
+                    <td>{{ user.work_place }}</td>
+                    <td>{{ user.created_at | showDate }}</td>
+                    <td><span class="tag tag-success">On/offline</span></td>
                     <td>
-                        <a href="#"><i class="fa fa-edit blue"></i></a>
-                        /
-                        <a href="#"><i class="fa fa-trash red"></i></a>
+                        <a href="#" title="Edit User info"><i class="fa fa-edit blue"></i></a>
+                        |
+                        <a href="#" title="View and Edit role of this user"><i class="fa fa-user-tag yellow"></i></a>
+                        |
+                        <a href="#" title="Delete this user"><i class="fa fa-trash red"></i></a>
                     </td>
                   </tr>
                 </tbody></table>
@@ -89,12 +91,12 @@
                     
                     <div class="form-row">
                         <div class="form-group col">
-                            <input v-model="form.code" type="text" name="code" placeholder="User code"
+                            <input v-model="form.code" type="text" name="code" placeholder="User code (optional)"
                                 class="form-control" :class="{ 'is-invalid': form.errors.has('code') }">
                             <has-error :form="form" field="code"></has-error>
                         </div>
                         <div class="form-group col">
-                            <input v-model="form.work_place" type="text" name="work_place" placeholder="Workplace"
+                            <input v-model="form.work_place" type="text" name="work_place" placeholder="Workplace (optional)"
                                 class="form-control" :class="{ 'is-invalid': form.errors.has('work_place') }">
                             <has-error :form="form" field="work_place"></has-error>
                         </div>
@@ -113,7 +115,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <input v-model="form.path_avatar" type="text" name="path_avatar" placeholder="Choose your avatar"
+                        <input v-model="form.path_avatar" type="text" name="path_avatar" placeholder="Choose your avatar (optional)"
                             class="form-control" :class="{ 'is-invalid': form.errors.has('path_avatar') }">
                         <has-error :form="form" field="path_avatar"></has-error>
                     </div>
@@ -157,6 +159,7 @@
     export default {
         data() {
             return {
+                users: {},
                 form: new Form({
                     username: '',
                     email: '',
@@ -166,19 +169,30 @@
                     first_name: '',
                     last_name: '',
                     work_place: '',
-                    path_avatar: 'profile.png'
+                    path_avatar: null
                 })
             }
         },
         methods: {
+            loadUsers() {
+                axios.get("api/user").then(({ data }) => (this.users = data.data));
+            },
             createUser() {
                 // Submit the form via a POST request
                 // this.form.post('api/user').then(({ data }) => { console.log(data) })
+                this.$Progress.start();
                 this.form.post('api/user');
+                $('#addNew').modal('hide');
+
+                toast({
+                    type: 'success',
+                    title: 'User Created in successfully'
+                });
+                this.$Progress.finish();
             }
         },
-        mounted() {
-            console.log('Component mounted.')
+        created() {
+            this.loadUsers();
         }
     }
 </script>
