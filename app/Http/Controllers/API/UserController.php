@@ -28,7 +28,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'username' => 'required|string|max:40',
+            'username' => 'required|string|max:40|unique:users',
             'email' => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|min:6',
             'last_name' => 'required|string|max:15',
@@ -67,7 +67,16 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $this->validate($request, [
+            'username' => 'required|string|max:40|unique:users,username,'.$user->id,
+            'email' => 'required|string|email|max:100|unique:users,email,'.$user->id,
+            'password' => 'sometimes|min:6',
+            'last_name' => 'required|string|max:15',
+            'first_name' => 'required|string|max:45'
+        ]);
+        $user->update($request->all());
+        return ['message' => 'Updated user info!!!'];
     }
 
     /**

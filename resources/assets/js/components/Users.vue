@@ -7,7 +7,7 @@
                 <h3 class="card-title">Users Table</h3>
 
                 <div class="card-tools">
-                  <button class="btn btn-success" data-toggle="modal" data-target="#addNew">
+                  <button class="btn btn-success" @click="newModal">
                       Add New <i class="fas fa-user-plus fa-fw"></i></button>
                 </div>
               </div>
@@ -37,7 +37,7 @@
                     <td>{{ user.created_at | showDate }}</td>
                     <td><span class="tag tag-success">On/offline</span></td>
                     <td>
-                        <a href="#" title="Edit User info"><i class="fa fa-edit blue"></i></a>
+                        <a href="#" title="Edit User info" @click="editModal(user)"><i class="fa fa-edit blue"></i></a>
                         |
                         <a href="#" title="View and Edit role of this user"><i class="fa fa-user-tag yellow"></i></a>
                         |
@@ -56,12 +56,12 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addNewLabel">Add New</h5>
+                <h5 class="modal-title">{{editmode ? 'Update User Info' : 'Add New'}}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form @submit.prevent="createUser">
+            <form @submit.prevent="editmode ? updateUser() : createUser()">
                 <div class="modal-body">
                     <div class="form-row">
                         <div class="form-group col">
@@ -146,7 +146,7 @@
             
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Create</button>
+                    <button type="submit" class="btn btn-primary"> {{editmode ? 'Update' : 'Create'}}</button>
                 </div>
             </form>
             </div>
@@ -159,8 +159,10 @@
     export default {
         data() {
             return {
+                editmode: false,
                 users: {},
                 form: new Form({
+                    id: 0,
                     username: '',
                     email: '',
                     password: '',
@@ -174,6 +176,17 @@
             }
         },
         methods: {
+            newModal() {
+                this.editmode = false;
+                this.form.reset();
+                $('#addNew').modal('show');
+            },
+            editModal(user) {
+                this.editmode = true;
+                // this.form.reset();
+                $('#addNew').modal('show');
+                this.form.fill(user);
+            },
             loadUsers() {
                 axios.get("api/user").then(({ data }) => (this.users = data.data));
             },
@@ -197,9 +210,26 @@
                         type: 'error',
                         title: 'Can not create user!'
                     });
-                    this.$Progress.finish();
+                    this.$Progress.fail();
                 });
                 
+            },
+            updateUser() {
+                this.$Progress.start();
+                this.form.put('api/user/' + this.form.id)
+                .then(() => {
+                    Fire.$emit('ReloadUserList');
+                    $('#addNew').modal('hide');
+                    swal('Updated!', 'Information has been updated.', 'success');
+                    this.$Progress.finish();
+                })
+                .catch(()=>{
+                    toast({
+                        type: 'error',
+                        title: 'Update not successfully!'
+                    });
+                    this.$Progress.fail();
+                });
             },
             deleteUser(id) {
                 swal({
@@ -213,7 +243,7 @@
                     }).then((result) => {
                         if (result.value) {
                             this.form.delete('api/user/' + id).then(() => {
-                                swal('Deleted!', 'Your file has been deleted.', 'success');
+                                swal('Deleted!', 'A user has been deleted.', 'success');
                                 Fire.$emit('ReloadUserList');
                             }).catch(() => {
                                 swal('Failed!', 'There was something wrongs.', 'warning');
