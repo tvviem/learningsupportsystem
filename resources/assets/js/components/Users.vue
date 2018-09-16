@@ -41,7 +41,7 @@
                         |
                         <a href="#" title="View and Edit role of this user"><i class="fa fa-user-tag yellow"></i></a>
                         |
-                        <a href="#" title="Delete this user"><i class="fa fa-trash red"></i></a>
+                        <a href="#" title="Delete this user" @click="deleteUser(user.id)"><i class="fa fa-trash red"></i></a>
                     </td>
                   </tr>
                 </tbody></table>
@@ -181,18 +181,54 @@
                 // Submit the form via a POST request
                 // this.form.post('api/user').then(({ data }) => { console.log(data) })
                 this.$Progress.start();
-                this.form.post('api/user');
-                $('#addNew').modal('hide');
+                this.form.post('api/user')
+                .then(()=>{
+                    Fire.$emit('ReloadUserList');
+                    $('#addNew').modal('hide');
 
-                toast({
-                    type: 'success',
-                    title: 'User Created in successfully'
+                    toast({
+                        type: 'success',
+                        title: 'User Created in successfully'
+                    });
+                    this.$Progress.finish();
+                })
+                .catch(() => {
+                    toast({
+                        type: 'error',
+                        title: 'Can not create user!'
+                    });
+                    this.$Progress.finish();
                 });
-                this.$Progress.finish();
+                
+            },
+            deleteUser(id) {
+                swal({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.value) {
+                            this.form.delete('api/user/' + id).then(() => {
+                                swal('Deleted!', 'Your file has been deleted.', 'success');
+                                Fire.$emit('ReloadUserList');
+                            }).catch(() => {
+                                swal('Failed!', 'There was something wrongs.', 'warning');
+                            });
+                        }
+                    })
             }
         },
         created() {
             this.loadUsers();
+            Fire.$on('ReloadUserList', () => {
+                this.loadUsers();
+            })
+            // Reload user list after 3 second
+            // setInterval(() => this.loadUsers(), 3000);
         }
     }
 </script>

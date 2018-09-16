@@ -57,7 +57,7 @@ const router = new VueRouter({
     routes // short for `routes: routes`
 })
 
-
+window.Fire = new Vue();
 
 const app = new Vue({
     el: '#app',
