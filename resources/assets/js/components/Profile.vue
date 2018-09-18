@@ -62,7 +62,7 @@
                             <div class="tab-pane active show" id="settings">
                                 <form class="form-horizontal">
                                     <div class="form-group">
-                                        <label for="inputName" class="col-sm-8 control-label">UserName</label>
+                                        <label for="inputName" class="col-sm-8 control-label">User Name</label>
                                         <div class="col-sm-12">
                                             <input type="" v-model="form.username" class="form-control" id="inputName" placeholder="Username">
                                             <has-error :form="form" field="username"></has-error>
@@ -97,7 +97,7 @@
                                     <!-- FirstName and LastName -->
                                     <div class="form-row">
                                         <div class="form-group col-6">
-                                            <label for="lastName" class="col-sm-12 control-label">Lastname</label>
+                                            <label for="lastName" class="col-sm-12 control-label">Last Name</label>
                                             <div class="col-sm-12">
                                                 <input v-model="form.last_name" type="text" name="last_name" placeholder="Last name" id="lastName"
                                                     class="form-control" :class="{ 'is-invalid': form.errors.has('last_name') }">
@@ -105,7 +105,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group col-6">
-                                            <label for="firstName" class="col-sm-12 control-label">Firstname</label>
+                                            <label for="firstName" class="col-sm-12 control-label">First Name</label>
                                             <div class="col-sm-12">
                                                 <input v-model="form.first_name" type="text" name="first_name" placeholder="First name" id="firstName"
                                                     class="form-control" :class="{ 'is-invalid': form.errors.has('first_name') }">
@@ -125,7 +125,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group col">
-                                            <label for="workPlace" class="col-sm-12 control-label">Workplace</label>
+                                            <label for="workPlace" class="col-sm-12 control-label">Work place</label>
                                             <div class="col-sm-12">
                                                 <input v-model="form.work_place" type="text" name="work_place" placeholder="Workplace" id="workPlace"
                                                     class="form-control" :class="{ 'is-invalid': form.errors.has('work_place') }">

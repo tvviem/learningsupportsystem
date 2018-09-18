@@ -16,7 +16,7 @@ class CreateRolesTable extends Migration
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
             // admin (auto create use seeder), lecturer, student
-            $table->string('role_name', 50)->unique();
+            $table->string('role_name', 30)->unique();
             $table->string('role_description', 80)->nullable();
             $table->timestamps();
         });

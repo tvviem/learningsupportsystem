@@ -15,11 +15,14 @@ class UsersTableSeeder extends Seeder
             'username' => 'tvviem',
             'email' => 'tvviem@blu.edu.vn',
             'password' => bcrypt('123456'),
-            'is_actived' => true,
-            'first_name' => 'Vĩnh Viêm',
+            'first_name' => 'Viêm',
             'last_name' => 'Triệu',
             'work_place' => 'bluitdev',
-            'path_avatar' => 'no_avatar.jpg'
+            'code' => '04.104',
+            'path_avatar' => 'no_avatar.jpg',
+            'active' => true,
+            'activation_token' => 'super_user',
+            'role_id' => 1
         ]);
     }
 }

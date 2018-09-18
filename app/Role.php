@@ -17,7 +17,11 @@ class Role extends Model
 
     // black list 
     protected $guarded = ['*'];
-    public function users() {
+    /* public function users() {
         return $this->belongsToMany('App\User', 'role_users', 'role_id', 'user_id');
+    } */
+    public function users()
+    {
+        return $this->hasMany('App\User');
     }
 }

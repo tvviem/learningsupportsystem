@@ -30,7 +30,7 @@
                     <td>{{ user.id }}</td>
                     <td>{{ user.username | upText }}</td>
                     <td>{{ user.email }}</td>
-                    <td><input type="checkbox" v-model="user.is_actived" /></td>
+                    <td><input type="checkbox" v-model="user.active" /></td>
                     <td>{{ user.first_name }}</td>
                     <td>{{ user.last_name }}</td>
                     <td>{{ user.work_place }}</td>
@@ -83,7 +83,7 @@
                         </div>
                         <div class="form-group col-3">
                             <div class="form-check form-check-inline">
-                                <input v-model="form.is_actived" class="form-check-input" type="checkbox" id="isActived">
+                                <input v-model="form.active" class="form-check-input" type="checkbox" id="isActived">
                                 <label class="form-check-label" for="isActived">Actived</label>
                             </div>
                         </div>
@@ -167,7 +167,7 @@
                     username: '',
                     email: '',
                     password: '',
-                    is_actived: false,
+                    active: false,
                     code: '',
                     first_name: '',
                     last_name: '',
