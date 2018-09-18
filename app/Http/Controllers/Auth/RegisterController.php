@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use App\RoleUser;
+use App\Notifications\SignupActivate;
 
 class RegisterController extends Controller
 {
@@ -75,12 +75,26 @@ class RegisterController extends Controller
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'work_place' => $data['work_place'],
-            'code' => $data['code']]);
-        // grant permit user access
-        RoleUser::create([
-            'user_id' => $user->id,
-            'role_id' => 3 // role_id default for normal user
+            'code' => $data['code'],
+            'activation_token' => str_random(60),
+            'role_id' => 3
         ]);
+        $user->notify(new SignupActivate($user));
+        // Show message request confirm in email box
+        return view('home');
+    }
+    
+    // Kich hoat tai khoan qua email
+    public function signupActivate($token) {
+        $user = User::where('activation_token', $token)->first();
+        if (!$user) {
+            return response()->json([
+                'message' => 'This activation token is invalid.'
+            ], 404);
+        }
+        $user->active = true;
+        $user->activation_token = '';
+        $user->save();
         return $user;
     }
 }
