@@ -66,6 +66,12 @@ class UserController extends Controller
     {
         //
     }
+    
+    // Hien thi chi tiet ho so nguoi dung
+    public function profile()
+    {
+        return auth('api')->user();
+    }
 
     /**
      * Update the specified resource in storage.

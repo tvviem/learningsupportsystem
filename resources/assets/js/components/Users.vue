@@ -114,6 +114,7 @@
                             <has-error :form="form" field="first_name"></has-error>
                         </div>
                     </div>
+                    
                     <div class="form-group">
                         <input v-model="form.path_avatar" type="text" name="path_avatar" placeholder="Choose your avatar (optional)"
                             class="form-control" :class="{ 'is-invalid': form.errors.has('path_avatar') }">
