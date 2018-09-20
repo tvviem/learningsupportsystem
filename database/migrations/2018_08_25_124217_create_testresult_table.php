@@ -19,8 +19,8 @@ class CreateTestresultTable extends Migration
             $table->integer('test_code_id')->unsigned(); // ID bo de
             $table->float('result', 2, 2)->nullable(); // khi tham gia chua ghi nhan ket qua
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('test_code_id')->references('id')->on('test_code');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('test_code_id')->references('id')->on('test_code')->onDelete('cascade');
             $table->index(['user_id', 'test_code_id']);
             $table->timestamps();
         });

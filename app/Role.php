@@ -16,12 +16,11 @@ class Role extends Model
     ]; */
 
     // black list 
-    protected $guarded = ['*'];
+    // protected $guarded = ['*'];
     /* public function users() {
         return $this->belongsToMany('App\User', 'role_users', 'role_id', 'user_id');
     } */
-    public function users()
-    {
-        return $this->hasMany('App\User');
+    public function permissions() {
+        return $this->belongsToMany(Permission::class, 'roles_permissions');
     }
 }

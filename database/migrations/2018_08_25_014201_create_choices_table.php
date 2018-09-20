@@ -20,7 +20,8 @@ class CreateChoicesTable extends Migration
             $table->boolean('is_correct_choice');
             $table->integer('question_id')->unsigned(); // ID cau hoi
 
-            $table->foreign('question_id')->references('id')->on('questions');
+            // Xoa cau hoi xoa luon cac phuong an tra loi tuong ung
+            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
             $table->timestamps();
         });
     }

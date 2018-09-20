@@ -23,7 +23,7 @@ class CreateTestcodeTable extends Migration
             $table->tinyInteger('duration'); // Thoi gian lam bai cua bo de
             
             $table->integer('user_id')->unsigned(); // Giang vien ra bo de kiem tra
-            $table->foreign('user_id')->references('id')->on('users'); 
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); 
             
             $table->timestamps();
         });

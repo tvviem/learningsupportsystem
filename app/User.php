@@ -6,11 +6,13 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Permissions\HasPermissionsTrait;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable, SoftDeletes;
+    use Notifiable, HasPermissionsTrait, HasApiTokens, SoftDeletes;
 
+    protected $dates = ['deleted_at'];
     /**
      * The attributes that are mass assignable.
      *
@@ -33,8 +35,8 @@ class User extends Authenticatable
     /* public function roles() {
         return $this->belongsToMany('App\Role', 'role_users', 'user_id', 'role_id');
     } */
-    public function role()
+    /* public function roles()
     {
-        return $this->belongsTo('App\Role', 'id', 'role_name');
-    }
+        return $this->belongsTo('App\Role', 'roles', 'name');
+    } */
 }

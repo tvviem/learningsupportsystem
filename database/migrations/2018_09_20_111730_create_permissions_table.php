@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateResourcesPermittedTable extends Migration
+class CreatePermissionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateResourcesPermittedTable extends Migration
      */
     public function up()
     {
-        // Design attend in the future 
-        Schema::create('resources_permitted', function (Blueprint $table) {
+        Schema::create('permissions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('uri_resource', 100); // examples: /product; /product/id/edit... 
-            $table->string('uri_target', 100); // examples: UsersController@index|create|show|edit
-            
+            $table->string('slug'); //edit-posts
+            $table->string('name'); // edit posts
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateResourcesPermittedTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('resources_permitted');
+        Schema::dropIfExists('permissions');
     }
 }
