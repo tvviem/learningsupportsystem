@@ -39,4 +39,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Role', 'roles', 'name');
     } */
+    public function isAdmin() {
+        return $this->hasRole('admin');
+    }
+    public function isLecturer() {
+        return $this->hasRole('lecturer');
+    }
+    public function isStudent() {
+        return $this->hasRole('student');
+    }
+
 }

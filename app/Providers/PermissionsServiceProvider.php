@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use App\Permission;
-use Illuminate\Auth\Access\Gate;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Blade;
 
 class PermissionsServiceProvider extends ServiceProvider
 {
@@ -17,7 +18,7 @@ class PermissionsServiceProvider extends ServiceProvider
     {
         Permission::get()->map(function($permission) {
             Gate::define($permission->slug, function($user) use ($permission){
-               return $user->hasPermissionTo($permission);
+                return $user->hasPermissionTo($permission); 
             });
         });
         Blade::directive('role', function ($role){

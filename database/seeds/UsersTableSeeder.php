@@ -27,35 +27,47 @@ class UsersTableSeeder extends Seeder
             'activation_token' => 'super_user',
             'role_id' => 1
         ]); */
-        $dev_role = Role::where('slug','developer')->first();
-        $manager_role = Role::where('slug', 'manager')->first();
-        $dev_perm = Permission::where('slug','create-tasks')->first();
-        $manager_perm = Permission::where('slug','edit-users')->first();
+        $admin_role = Role::where('slug','admin')->first();
+        $lecturer_role = Role::where('slug', 'lecturer')->first();
+        $student_role = Role::where('slug', 'student')->first();
 
-        $developer = new User();
-        $developer->username = 'tvviem';
-        $developer->email = 'tvviem@blu.edu.vn';
-        $developer->password = bcrypt('secret');
-        $developer->first_name = 'Viem';
-        $developer->last_name = 'Trieu Vinh';
-        $developer->active = true;
-        $developer->activation_token = str_random(60);
+        $admin_perm = Permission::where('slug','create-branches')->first(); // them quyen cho admin
+        $lecturer_perm = Permission::where('slug','join-option-test')->first();// Them quyen cho lect
 
-        $developer->save();
-        $developer->roles()->attach($dev_role);
-        $developer->permissions()->attach($dev_perm);
+        $admin = new User();
+        $admin->username = 'tvviem';
+        $admin->email = 'tvviem@blu.edu.vn';
+        $admin->password = bcrypt('secret');
+        $admin->first_name = 'Viem';
+        $admin->last_name = 'Trieu Vinh';
+        $admin->active = true;
+        $admin->activation_token = str_random(60);
+        $admin->save();
+        $admin->roles()->attach($admin_role);
+        $admin->permissions()->attach($admin_perm); // cho admin them dac quyen cua giang vien
 
-
-        $manager = new User();
-        $manager->username = 'tyyen';
-        $manager->email = 'tyyen@blu.edu.vn';
-        $manager->password = bcrypt('secret');
-        $manager->first_name = 'Yen';
-        $manager->last_name = 'Trieu Yen';
-        $manager->active = false;
-        $manager->activation_token = str_random(60);
-        $manager->save();
-        $manager->roles()->attach($manager_role);
-        $manager->permissions()->attach($manager_perm);
+        $lecturer = new User();
+        $lecturer->username = 'tyyen';
+        $lecturer->email = 'tyyen@blu.edu.vn';
+        $lecturer->password = bcrypt('secret');
+        $lecturer->first_name = 'Yen';
+        $lecturer->last_name = 'Trieu Yen';
+        $lecturer->active = false;
+        $lecturer->activation_token = str_random(60);
+        $lecturer->save();
+        $lecturer->roles()->attach($lecturer_role);
+        $lecturer->permissions()->attach($lecturer_perm); // Cho giang vien them quyen kiem tra
+        
+        $student = new User();
+        $student->username = 'student';
+        $student->email = 'student@blu.edu.vn';
+        $student->password = bcrypt('secret');
+        $student->first_name = 'student';
+        $student->last_name = 'He is a';
+        $student->active = false;
+        $student->activation_token = str_random(60);
+        $student->save();
+        $student->roles()->attach($student_role);
+        // $student->permissions()->attach($student_perm);
     }
 }

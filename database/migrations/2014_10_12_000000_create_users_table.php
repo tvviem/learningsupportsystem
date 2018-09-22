@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('path_avatar', 80)->default('profile.png'); // Tên tập tin hình ảnh
             
             $table->boolean('active')->default(false); // Kích hoạt chưa
-            $table->string('activation_token');
+            $table->string('activation_token', 100);
             
             // $table->integer('role_id')->unsigned();
             // $table->foreign('role_id')->references('id')->on('roles');

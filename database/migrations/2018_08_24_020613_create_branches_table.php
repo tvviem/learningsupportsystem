@@ -19,8 +19,10 @@ class CreateBranchesTable extends Migration
             $table->string('branch_name', 60)->unique();
             $table->string('branch_description', 120)->nullable();
             $table->integer('field_id')->unsigned();
+            $table->integer('user_id')->unsigned();
 
             $table->foreign('field_id')->references('id')->on('fields');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
