@@ -18,7 +18,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper" id="app">
-
+  
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
     <!-- Left navbar links -->
@@ -74,8 +74,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
+          @role('admin')
+          {{-- Dashboard --}}
           <li class="nav-item">
             <router-link to="/dashboard" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt blue"></i>
@@ -84,7 +84,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </router-link>
           </li>
-      
+          {{-- User Management --}}
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link active">
               <i class="nav-icon fa fa-cog  green"></i>
@@ -102,6 +102,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             </ul>
           </li>
+          {{-- Create passport --}}
           <li class="nav-item">
               <router-link to="/developer" class="nav-link">
                 <i class="nav-icon fas fa-cogs"></i>
@@ -110,6 +111,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </p>
               </router-link>
           </li>
+          {{-- Profile Admin --}}
           <li class="nav-item">
               <router-link to="/profile" class="nav-link">
                 <i class="nav-icon fa fa-user orange"></i>
@@ -118,6 +120,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </p>
               </router-link>
           </li>
+          @endrole
+          {{-- LOGOUT SYSTEM --}}
           <li class="nav-item">
               <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
@@ -144,7 +148,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          
+          @role('admin')
+            <span>Hello ADMIN. Welcome to System Management</span>
+          @endrole
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
@@ -175,6 +181,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Default to the left -->
     <strong>Copyright &copy; 2014-2018 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
   </footer> --}}
+
 </div>
 <!-- ./wrapper -->
 <script src="/js/app.js"></script>

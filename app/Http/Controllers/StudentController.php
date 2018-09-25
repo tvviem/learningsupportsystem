@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class LecturerController extends Controller
+class StudentController extends Controller
 {
     public function __construct()
     {
@@ -18,6 +18,6 @@ class LecturerController extends Controller
      */
     public function index()
     {
-        return view('layouts.lecturer');
+        return view('layouts.student');
     }
 }

@@ -39,10 +39,10 @@ Route::group(['middleware' => 'role:admin'], function() {
 Route::group(['middleware' => 'role:lecturer'], function() {
     Route::get('/lecturer-board', 'LecturerController@index');
 });
-/*
+
 Route::group(['middleware' => 'role:student'], function() {
-    Route::get('/dashboard', 'HomeController@index');
-}); */
+    Route::get('/student-board', 'StudentController@index');
+});
 
 Route::get('/', function (Request $request) {
     if (!Auth::check()) {
