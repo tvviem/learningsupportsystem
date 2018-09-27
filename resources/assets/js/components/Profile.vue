@@ -4,7 +4,7 @@
             <div class="col-md-12">
                 <div class="card card-widget widget-user">
                     <!-- Add the bg color to the header using any of the bg-* classes -->
-                    <div class="widget-user-header text-white" style="background-image:url('./img/user-cover.jpg')">
+                    <div class="widget-user-header text-white" style="background-image:url('../img/user-cover.jpg')">
                         <h3 class="widget-user-username">Elizabeth Pierce</h3>
                         <h5 class="widget-user-desc">Web Designer</h5>
                     </div>
@@ -222,7 +222,7 @@
                 if(this.form.password == ''){
                     this.form.password = undefined;
                 }
-                this.form.put('api/profile')
+                this.form.put('../api/profile')
                 .then(()=>{
                     this.$Progress.finish();
                 })
@@ -252,7 +252,7 @@
             }
         },
         created() {
-            axios.get('api/profile')
+            axios.get('../api/profile')
             .then(({data}) => (this.form.fill(data)));
         },
         mounted() {

@@ -3,10 +3,12 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card card-default">
-                    <div class="card-header">Dashboard Component</div>
+                    <div class="card-header">Thong ke bieu do</div>
 
                     <div class="card-body">
-                        I'm an example component.
+                        So nguoi dung dang online <br>
+                        So luong cau hoi hien tai <br>
+                        Ngan hang tai lieu theo cac nhanh kien thuc, linh vuc
                     </div>
                 </div>
             </div>

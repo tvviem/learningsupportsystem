@@ -189,13 +189,13 @@
                 this.form.fill(user);
             },
             loadUsers() {
-                axios.get("api/user").then(({ data }) => (this.users = data.data));
+                axios.get("../api/user").then(({ data }) => (this.users = data.data));
             },
             createUser() {
                 // Submit the form via a POST request
                 // this.form.post('api/user').then(({ data }) => { console.log(data) })
                 this.$Progress.start();
-                this.form.post('api/user')
+                this.form.post('../api/user')
                 .then(()=>{
                     Fire.$emit('ReloadUserList');
                     $('#addNew').modal('hide');
@@ -217,7 +217,7 @@
             },
             updateUser() {
                 this.$Progress.start();
-                this.form.put('api/user/' + this.form.id)
+                this.form.put('../api/user/' + this.form.id)
                 .then(() => {
                     Fire.$emit('ReloadUserList');
                     $('#addNew').modal('hide');
@@ -243,7 +243,7 @@
                     confirmButtonText: 'Yes, delete it!'
                     }).then((result) => {
                         if (result.value) {
-                            this.form.delete('api/user/' + id).then(() => {
+                            this.form.delete('../api/user/' + id).then(() => {
                                 swal('Deleted!', 'A user has been deleted.', 'success');
                                 Fire.$emit('ReloadUserList');
                             }).catch(() => {

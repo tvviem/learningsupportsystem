@@ -48,10 +48,12 @@ Vue.component(AlertError.name, AlertError)
 window.Form = Form;
 
 let routes = [
-    { path: '/dashboard', component: require('./components/Dashboard.vue') },
-    { path: '/developer', component: require('./components/Developer.vue') },
-    { path: '/users', component: require('./components/Users.vue') },
-    { path: '/profile', component: require('./components/Profile.vue') }
+    { path: '/profile', component: require('./components/Profile.vue') },
+    { path: '/admin/dashboard', component: require('./components/admin/Dashboard.vue') },
+    { path: '/admin/manage-users', component: require('./components/admin/Users.vue') },
+    { path: '/admin/manage-grant-permissions', component: require('./components/admin/GrantPermission.vue') },
+    { path: '/admin/manage-fields-branches', component: require('./components/admin/FieldsBranches.vue') },
+    { path: '/admin/manage-passport', component: require('./components/admin/Developer.vue') }
 ]
 const router = new VueRouter({
     mode: 'hash',

@@ -16,9 +16,6 @@ class RoleMiddleware
      */
     public function handle($request, Closure $next, $roles, $permission = null)
     {
-        /* if (Auth::guest()) {
-            return redirect('/login');
-        } */
 /*         $user = Auth::user();
         if($user->isAdmin())
             return $next($request); */

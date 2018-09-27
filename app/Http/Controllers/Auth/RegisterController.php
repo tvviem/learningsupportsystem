@@ -81,7 +81,7 @@ class RegisterController extends Controller
         ]);
         $user->notify(new SignupActivate($user));
         // Show message request confirm in email box
-        return view('home');
+        return view('/');
     }
     
     // Kich hoat tai khoan qua email
