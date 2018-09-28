@@ -52,7 +52,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="#" class="brand-link">
+    <a href="#" class="brand-link" title="A system support review your knowledge everyday">
       <img src="../img/logo.png" alt="LearningSS Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">LearningSS</span>
@@ -77,7 +77,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           @role('admin')
           {{-- Dashboard --}}
-          <li class="nav-item">
+          <li class="nav-item" title="General Information quantity questions, unit exam, online users...">
             <router-link to="/admin/dashboard" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt blue"></i>
               <p>
@@ -85,30 +85,36 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </router-link>
           </li>
+          <li class="nav-item" title="Manage all users in system">
+              <router-link to="/admin/manage-users" class="nav-link">
+                <i class="fas fa-users nav-icon"></i>
+                <p>Users</p>
+              </router-link>
+          </li>
+          <li class="nav-item" title="Grant roles and permissions for users">
+              <router-link to="/admin/manage-grant-permissions" class="nav-link">
+                {{-- <i class="fas fa-user-secret nav-icon"></i> --}}
+                <i class="fas fa-user-cog nav-icon"></i>
+                <p>Grant Permissions</p>
+              </router-link>
+          </li>
           {{-- Management --}}
-          <li class="nav-item has-treeview">
+          <li class="nav-item has-treeview" title="Manage some specify in system">
             <a href="#" class="nav-link active">
               <i class="nav-icon fa fa-cog green"></i>
               <p>
-                Management
+                Specifications
                 <i class="right fa fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview pl-3">
-              <li class="nav-item">
-                <router-link to="/admin/manage-users" class="nav-link">
-                  <i class="fas fa-users nav-icon"></i>
-                  <p>Users</p>
+            <ul class="nav nav-treeview pl-3">    
+              <li class="nav-item" title="Manage difficulty level questions">
+                <router-link to="/admin/manage-levels" class="nav-link">
+                  <i class="fas fa-sort-amount-up nav-icon"></i>
+                  <p>Levels of questions</p>
                 </router-link>
               </li>
-              <li class="nav-item">
-                <router-link to="/admin/manage-grant-permissions" class="nav-link">
-                  {{-- <i class="fas fa-user-secret nav-icon"></i> --}}
-                  <i class="fas fa-user-cog nav-icon"></i>
-                  <p>Grant Permissions</p>
-                </router-link>
-              </li>
-              <li class="nav-item">
+              <li class="nav-item" title="Create fields and edit branches">
                 <router-link to="/admin/manage-fields-branches" class="nav-link">
                   <i class="fas fa-object-group nav-icon"></i>
                   <p>Fields &amp; Branches </p>
@@ -117,7 +123,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </ul>
           </li>
           {{-- Create passport --}}
-          <li class="nav-item">
+          <li class="nav-item" title="Authority passport to users access API">
               <router-link to="/admin/manage-passport" class="nav-link">
                 <i class="nav-icon fas fa-cogs"></i>
                 <p>
@@ -128,17 +134,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
           @endrole
           @role('lecturer')
           {{-- BANG THONG KE VA DIEU KHIEN --}}
-          <li class="nav-item">
-            <router-link to="/lecturer/dashboard" class="nav-link">
+          <li class="nav-item" title="View general information">
+            <router-link to="/lecturer/general-info" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt blue"></i>
               <p>
-                Dashboard
+                General
               </p>
             </router-link>
           </li>
           {{-- CREATE QUESTION --}}
-          <li class="nav-item">
-            <router-link to="/lecturer/dashboard" class="nav-link">
+          <li class="nav-item" title="Create more questions">
+            <router-link to="/lecturer/manage-questions" class="nav-link">
               {{-- <i class="fas fa-question-circle nav-icon"></i> --}}
               <i class="fas fa-puzzle-piece nav-icon"></i>
               <p>
@@ -147,26 +153,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </router-link>
           </li>
           {{-- CREATE TEST-CODE for students group --}}
-          <li class="nav-item">
-            <router-link to="/developer" class="nav-link">
+          <li class="nav-item" title="Create the exam">
+            <router-link to="/lecturer/init-exam" class="nav-link">
               <i class="fas fa-flag-checkered nav-icon"></i>
               <p>
-                Unit Test
+                Init exam
               </p>
             </router-link>
           </li>
           {{-- VIEW student' result of test-code --}}
-          <li class="nav-item">
-            <router-link to="/developer" class="nav-link">
+          <li class="nav-item" title="View results of a test unit">
+            <router-link to="/lecturer/view-results" class="nav-link">
               <i class="fas fa-list-alt nav-icon"></i>
               <p>
-                Results List
+                Results
               </p>
             </router-link>
           </li>
           {{-- UPDATE documents --}}
-          <li class="nav-item">
-            <router-link to="/developer" class="nav-link">
+          <li class="nav-item" title="Update resources for branches">
+            <router-link to="/lecturer/provide-documents" class="nav-link">
               <i class="fas fa-book nav-icon"></i>
               <p>
                 Provide documents
@@ -174,29 +180,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </router-link>
           </li>
           {{-- MORE FEATUREs --}}
-          <li class="nav-item has-treeview">
+          <li class="nav-item has-treeview" title="View more features">
             <a href="#" class="nav-link">
               <i class="nav-icon fa fa-cog green"></i>
               <p>
-                Other Features
+                Other...
                 <i class="right fa fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview ml-3 bg-secondary">
-              <li class="nav-item">
-                <router-link to="/users" class="nav-link">
+              <li class="nav-item" title="Lecturer join test and export unit test">
+                <router-link to="/lecturer/join-own-test" class="nav-link">
                   <i class="fas fa-hand-point-right nav-icon"></i>
                   <p>Own test</p>
                 </router-link>
               </li>
-              <li class="nav-item" title="View all suggests from Students">
-                <router-link to="/users" class="nav-link">
+              <li class="nav-item" title="View all proposals of Students">
+                <router-link to="/lecturer/view-require-helps" class="nav-link">
                   <i class="far fa-envelope nav-icon"></i>
                   <p>View requires</p>
                 </router-link>
               </li>
               <li class="nav-item" title="Create new branches in field knowledge">
-                <router-link to="/users" class="nav-link">
+                <router-link to="/lecturer/create-fields-branches" class="nav-link">
                   <i class="fas fa-layer-group nav-icon"></i>
                   <p>Branches</p>
                 </router-link>
@@ -207,17 +213,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
           @role('student')
           {{-- Dashboard --}}
-          <li class="nav-item">
-            <router-link to="/student/general" class="nav-link">
+          <li class="nav-item" title="View your general information">
+            <router-link to="/student/general-info" class="nav-link">
               <i class="fas fa-chart-line nav-icon"></i>
               <p>
-                General infomation
+                General
               </p>
             </router-link>
           </li>
           {{-- Random test --}}
-          <li class="nav-item">
-            <router-link to="/student/rand-test" class="nav-link">
+          <li class="nav-item" title="Participate in the setting random questions">
+            <router-link to="/student/join-random-test" class="nav-link">
               {{-- <i class="fas fa-question-circle nav-icon"></i> --}}
               <i class="fas fa-random nav-icon"></i>
               <p>
@@ -226,7 +232,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </router-link>
           </li>
           {{-- Join test from lecturer --}}
-          <li class="nav-item" title="Join test from lecturer">
+          <li class="nav-item" title="Join a test created by lecturers">
             <router-link to="/student/take-exam" class="nav-link">
               {{-- <i class="fas fa-question-circle nav-icon"></i> --}}
               <i class="fas fa-puzzle-piece nav-icon"></i>
@@ -236,7 +242,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </router-link>
           </li>
           {{-- Get document field from lecturer --}}
-          <li class="nav-item" title="Join test from lecturer">
+          <li class="nav-item" title="Get documents in branches">
             <router-link to="/student/get-documents" class="nav-link">
               {{-- <i class="fas fa-question-circle nav-icon"></i> --}}
               <i class="fas fa-book-reader nav-icon"></i>
@@ -246,7 +252,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </router-link>
           </li>
           {{-- Other features --}}
-          <li class="nav-item has-treeview">
+          <li class="nav-item has-treeview" title="More features...">
             <a href="#" class="nav-link">
               <i class="nav-icon fa fa-cog green"></i>
               <p>
@@ -255,14 +261,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </a>
             <ul class="nav nav-treeview px-3">
-              <li class="nav-item" title="Student can request to help from lecturer">
+              <li class="nav-item" title="Student can require helping from lecturer">
                 <router-link to="/student/ask-support" class="nav-link">
                   <i class="far fa-comment-dots nav-icon"></i>
                   <p>Ask support</p>
                 </router-link>
               </li>
-              <li class="nav-item" title="Create chatting channel for multi-student">
-                <router-link to="/admin/manage-grant-permissions" class="nav-link">
+              <li class="nav-item" title="Create a chatting channel for multi-student">
+                <router-link to="/student/create-a-channel" class="nav-link">
                   <i class="far fa-comments nav-icon"></i>
                   <p>Create a channel</p>
                 </router-link>
@@ -271,7 +277,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </li>
           @endrole
           {{-- Profile for All users --}}
-          <li class="nav-item">
+          <li class="nav-item" title="View your profile and update">
               <router-link to="/profile" class="nav-link">
                 <i class="fas fa-address-card nav-icon orange"></i>
                 <p>
@@ -280,7 +286,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </router-link>
           </li>
           {{-- LOGOUT SYSTEM --}}
-          <li class="nav-item">
+          <li class="nav-item" title="Sign out the system">
               <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
                 <i class="nav-icon fa fa-power-off red"></i>

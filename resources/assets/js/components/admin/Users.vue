@@ -30,7 +30,7 @@
                     <td>{{ user.id }}</td>
                     <td>{{ user.username | upText }}</td>
                     <td>{{ user.email }}</td>
-                    <td><input type="checkbox" v-model="user.active" /></td>
+                    <td style="text-align: center"><input type="checkbox" v-model="user.active" disabled/></td>
                     <td>{{ user.first_name }}</td>
                     <td>{{ user.last_name }}</td>
                     <td>{{ user.work_place }}</td>
@@ -38,10 +38,13 @@
                     <td><span class="tag tag-success">On/offline</span></td>
                     <td>
                         <a href="#" title="Edit User info" @click="editModal(user)"><i class="fa fa-edit blue"></i></a>
-                        |
-                        <a href="#" title="View and Edit role of this user"><i class="fa fa-user-tag yellow"></i></a>
-                        |
-                        <a href="#" title="Delete this user" @click="deleteUser(user.id)"><i class="fa fa-trash red"></i></a>
+                        <!-- Except admin role with id=1 -->
+                        <span v-if="!(user.id===1)">
+                            |
+                            <a href="#" title="View and Edit role of this user"><i class="fa fa-user-tag yellow"></i></a>
+                            |
+                            <a href="#" title="Delete this user" @click="deleteUser(user.id)"><i class="fa fa-trash red"></i></a>
+                        </span>
                     </td>
                   </tr>
                 </tbody></table>
@@ -81,7 +84,7 @@
                                 class="form-control" :class="{ 'is-invalid': form.errors.has('email') }">
                             <has-error :form="form" field="email"></has-error>
                         </div>
-                        <div class="form-group col-3">
+                        <div class="form-group col-3" v-show="!(form.id===1)">
                             <div class="form-check form-check-inline">
                                 <input v-model="form.active" class="form-check-input" type="checkbox" id="isActived">
                                 <label class="form-check-label" for="isActived">Actived</label>
@@ -123,23 +126,20 @@
                     <div class="form-row">
                         <div class="form-group col">
                             <div class="form-check">
-                                <label class="form-check-label">
-                                    <input type="checkbox" class="form-check-input" value="">Student
-                                </label>
+                                <input type="radio" class="form-check-input" name="role" id="rdoStudent" value="Student" v-model="form.role" checked>
+                                <label class="form-check-label" for="rdoStudent">Student</label>
                             </div>
                         </div>
                         <div class="form-group col">
                             <div class="form-check">
-                                <label class="form-check-label">
-                                    <input type="checkbox" class="form-check-input" value="">Lecturer
-                                </label>
+                                <input type="radio" class="form-check-input" name="role" id="rdoLecturer" value="Lecturer" v-model="form.role">
+                                <label class="form-check-label" for="rdoLecturer">Lecturer</label>
                             </div>
                         </div>
                         <div class="form-group col">
                             <div class="form-check">
-                                <label class="form-check-label">
-                                    <input type="checkbox" class="form-check-input" value="">Administrator
-                                </label>
+                                <input type="radio" class="form-check-input" name="role" id="rdoAdmin" value="Admin" v-model="form.role">
+                                <label class="form-check-label" for="rdoAdmin">Admin</label>
                             </div>
                         </div>
                     </div>
@@ -172,7 +172,8 @@
                     first_name: '',
                     last_name: '',
                     work_place: '',
-                    path_avatar: null
+                    path_avatar: null,
+                    role: ''
                 })
             }
         },
@@ -193,9 +194,12 @@
             },
             createUser() {
                 // Submit the form via a POST request
-                // this.form.post('api/user').then(({ data }) => { console.log(data) })
+                /* this.form.post('/api/user').then(({ data }) => { console.log(data) })
+                .catch((err)=> {
+                    console.log(err)
+                }) */
                 this.$Progress.start();
-                this.form.post('../api/user')
+                this.form.post('/api/user')
                 .then(()=>{
                     Fire.$emit('ReloadUserList');
                     $('#addNew').modal('hide');
@@ -206,7 +210,7 @@
                     });
                     this.$Progress.finish();
                 })
-                .catch(() => {
+                .catch((error) => {
                     toast({
                         type: 'error',
                         title: 'Can not create user!'

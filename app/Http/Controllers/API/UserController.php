@@ -40,20 +40,35 @@ class UserController extends Controller
             'username' => 'required|string|max:40|unique:users',
             'email' => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|min:6',
-            'last_name' => 'required|string|max:15',
-            'first_name' => 'required|string|max:45'
+            'last_name' => 'required|string|max:45',
+            'first_name' => 'required|string|max:15'
         ]);
-        return User::create([
+        $newUser = new User();
+        $newUser->username = $request['username'];
+        $newUser->email = $request['email'];
+        $newUser->password = Hash::make($request['password']);
+        $newUser->first_name = $request['first_name'];
+        $newUser->last_name = $request['last_name'];
+        $newUser->work_place = $request['work_place'];
+        $newUser->code = $request['code'];
+        $newUser->path_avatar = $request['path_avatar'];
+        $newUser->active = $request['active'];
+        $newUser->activation_token = str_random(60);
+        $newUser->save();
+        $newUser->giveRolesForUser($request['role']);
+        return $newUser;
+        /* return User::create([
             'username' => $request['username'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
-            'is_actived' => $request['is_actived'],
-            'code' => $request['code'],
-            'work_place' => $request['work_place'],
-            'last_name' => $request['last_name'],
             'first_name' => $request['first_name'],
-            'path_avatar' => $request['path_avatar']
-        ]);
+            'last_name' => $request['last_name'],
+            'work_place' => $request['work_place'],
+            'code' => $request['code'],
+            'path_avatar' => $request['path_avatar'],
+            'active' => $request['active'],
+            'activation_token' => str_random(60)
+        ]); */
     }
 
     /**

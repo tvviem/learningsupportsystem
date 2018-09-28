@@ -61,7 +61,6 @@ trait HasPermissionsTrait {
         $this->permissions()->saveMany($permissions);
         return $this;
     }
-    
     /* public function deletePermissions( ... $permissions ) {
         $permissions = $this->getAllPermissions($permissions);
         $this->permissions()->detach($permissions);
@@ -72,8 +71,19 @@ trait HasPermissionsTrait {
 		$permissions = $this->getAllPermissions($permissions);
 		$this->permissions()->detach($permissions);
 		return $this;
-	}
-    
+    }
+    public function giveRolesForUser(... $roles) {
+        $roles = $this->getAllRoles($roles);
+        if($roles===null)
+            return $this;
+        $this->roles()->saveMany($roles);
+        return $this;
+    }
+    public function withdrawRolesTo(... $roles) {
+        $roles = $this->getAllRoles($roles);
+        $this->roles()->detach($roles);
+        return $this;
+    } 
     public function refreshPermissions( ... $permissions ) {
 		$this->permissions()->detach();
 		return $this->givePermissionsTo($permissions);
@@ -81,5 +91,8 @@ trait HasPermissionsTrait {
     
     protected function getAllPermissions(array $permissions) {
 		return Permission::whereIn('slug', $permissions)->get();
-	}
+    }
+    protected function getAllRoles(array $roles) {
+        return Role::whereIn('slug', $roles)->get();
+    }
 }

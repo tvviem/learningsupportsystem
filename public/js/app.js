@@ -71762,7 +71762,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n.widget-user-header[data-v-4bdda942] {\n    background-position: center center;\n    background-size: cover;\n}\n", ""]);
+exports.push([module.i, "\n.widget-user-header[data-v-4bdda942] {\r\n    background-position: center center;\r\n    background-size: cover;\n}\r\n", ""]);
 
 // exports
 
@@ -72015,7 +72015,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 username: '',
                 email: '',
                 password: '',
-                is_actived: false,
+                active: false,
                 code: '',
                 first_name: '',
                 last_name: '',
@@ -72258,20 +72258,20 @@ var render = function() {
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: _vm.form.is_actived,
-                                  expression: "form.is_actived"
+                                  value: _vm.form.active,
+                                  expression: "form.active"
                                 }
                               ],
                               staticClass: "form-check-input",
                               attrs: { type: "checkbox", id: "isActived" },
                               domProps: {
-                                checked: Array.isArray(_vm.form.is_actived)
-                                  ? _vm._i(_vm.form.is_actived, null) > -1
-                                  : _vm.form.is_actived
+                                checked: Array.isArray(_vm.form.active)
+                                  ? _vm._i(_vm.form.active, null) > -1
+                                  : _vm.form.active
                               },
                               on: {
                                 change: function($event) {
-                                  var $$a = _vm.form.is_actived,
+                                  var $$a = _vm.form.active,
                                     $$el = $event.target,
                                     $$c = $$el.checked ? true : false
                                   if (Array.isArray($$a)) {
@@ -72281,21 +72281,21 @@ var render = function() {
                                       $$i < 0 &&
                                         _vm.$set(
                                           _vm.form,
-                                          "is_actived",
+                                          "active",
                                           $$a.concat([$$v])
                                         )
                                     } else {
                                       $$i > -1 &&
                                         _vm.$set(
                                           _vm.form,
-                                          "is_actived",
+                                          "active",
                                           $$a
                                             .slice(0, $$i)
                                             .concat($$a.slice($$i + 1))
                                         )
                                     }
                                   } else {
-                                    _vm.$set(_vm.form, "is_actived", $$c)
+                                    _vm.$set(_vm.form, "active", $$c)
                                   }
                                 }
                               }
@@ -73120,7 +73120,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 first_name: '',
                 last_name: '',
                 work_place: '',
-                path_avatar: null
+                path_avatar: null,
+                role: ''
             })
         };
     },
@@ -73149,9 +73150,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             // Submit the form via a POST request
-            // this.form.post('api/user').then(({ data }) => { console.log(data) })
+            /* this.form.post('/api/user').then(({ data }) => { console.log(data) })
+            .catch((err)=> {
+                console.log(err)
+            }) */
             this.$Progress.start();
-            this.form.post('../api/user').then(function () {
+            this.form.post('/api/user').then(function () {
                 Fire.$emit('ReloadUserList');
                 $('#addNew').modal('hide');
 
@@ -73160,7 +73164,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     title: 'User Created in successfully'
                 });
                 _this2.$Progress.finish();
-            }).catch(function () {
+            }).catch(function (error) {
                 toast({
                     type: 'error',
                     title: 'Can not create user!'
@@ -73264,7 +73268,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(user.email))]),
                       _vm._v(" "),
-                      _c("td", [
+                      _c("td", { staticStyle: { "text-align": "center" } }, [
                         _c("input", {
                           directives: [
                             {
@@ -73274,7 +73278,7 @@ var render = function() {
                               expression: "user.active"
                             }
                           ],
-                          attrs: { type: "checkbox" },
+                          attrs: { type: "checkbox", disabled: "" },
                           domProps: {
                             checked: Array.isArray(user.active)
                               ? _vm._i(user.active, null) > -1
@@ -73334,21 +73338,33 @@ var render = function() {
                           },
                           [_c("i", { staticClass: "fa fa-edit blue" })]
                         ),
-                        _vm._v("\n                    |\n                    "),
-                        _vm._m(2, true),
-                        _vm._v("\n                    |\n                    "),
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "#", title: "Delete this user" },
-                            on: {
-                              click: function($event) {
-                                _vm.deleteUser(user.id)
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "fa fa-trash red" })]
-                        )
+                        _vm._v(" "),
+                        !(user.id === 1)
+                          ? _c("span", [
+                              _vm._v(
+                                "\n                        |\n                        "
+                              ),
+                              _vm._m(2, true),
+                              _vm._v(
+                                "\n                        |\n                        "
+                              ),
+                              _c(
+                                "a",
+                                {
+                                  attrs: {
+                                    href: "#",
+                                    title: "Delete this user"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.deleteUser(user.id)
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "fa fa-trash red" })]
+                              )
+                            ])
+                          : _vm._e()
                       ])
                     ])
                   })
@@ -73533,70 +73549,84 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
-                      _c("div", { staticClass: "form-group col-3" }, [
-                        _c(
-                          "div",
-                          { staticClass: "form-check form-check-inline" },
-                          [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.form.active,
-                                  expression: "form.active"
-                                }
-                              ],
-                              staticClass: "form-check-input",
-                              attrs: { type: "checkbox", id: "isActived" },
-                              domProps: {
-                                checked: Array.isArray(_vm.form.active)
-                                  ? _vm._i(_vm.form.active, null) > -1
-                                  : _vm.form.active
-                              },
-                              on: {
-                                change: function($event) {
-                                  var $$a = _vm.form.active,
-                                    $$el = $event.target,
-                                    $$c = $$el.checked ? true : false
-                                  if (Array.isArray($$a)) {
-                                    var $$v = null,
-                                      $$i = _vm._i($$a, $$v)
-                                    if ($$el.checked) {
-                                      $$i < 0 &&
-                                        _vm.$set(
-                                          _vm.form,
-                                          "active",
-                                          $$a.concat([$$v])
-                                        )
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: !(_vm.form.id === 1),
+                              expression: "!(form.id===1)"
+                            }
+                          ],
+                          staticClass: "form-group col-3"
+                        },
+                        [
+                          _c(
+                            "div",
+                            { staticClass: "form-check form-check-inline" },
+                            [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.form.active,
+                                    expression: "form.active"
+                                  }
+                                ],
+                                staticClass: "form-check-input",
+                                attrs: { type: "checkbox", id: "isActived" },
+                                domProps: {
+                                  checked: Array.isArray(_vm.form.active)
+                                    ? _vm._i(_vm.form.active, null) > -1
+                                    : _vm.form.active
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$a = _vm.form.active,
+                                      $$el = $event.target,
+                                      $$c = $$el.checked ? true : false
+                                    if (Array.isArray($$a)) {
+                                      var $$v = null,
+                                        $$i = _vm._i($$a, $$v)
+                                      if ($$el.checked) {
+                                        $$i < 0 &&
+                                          _vm.$set(
+                                            _vm.form,
+                                            "active",
+                                            $$a.concat([$$v])
+                                          )
+                                      } else {
+                                        $$i > -1 &&
+                                          _vm.$set(
+                                            _vm.form,
+                                            "active",
+                                            $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1))
+                                          )
+                                      }
                                     } else {
-                                      $$i > -1 &&
-                                        _vm.$set(
-                                          _vm.form,
-                                          "active",
-                                          $$a
-                                            .slice(0, $$i)
-                                            .concat($$a.slice($$i + 1))
-                                        )
+                                      _vm.$set(_vm.form, "active", $$c)
                                     }
-                                  } else {
-                                    _vm.$set(_vm.form, "active", $$c)
                                   }
                                 }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "label",
-                              {
-                                staticClass: "form-check-label",
-                                attrs: { for: "isActived" }
-                              },
-                              [_vm._v("Actived")]
-                            )
-                          ]
-                        )
-                      ])
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "form-check-label",
+                                  attrs: { for: "isActived" }
+                                },
+                                [_vm._v("Actived")]
+                              )
+                            ]
+                          )
+                        ]
+                      )
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-row" }, [
@@ -73819,7 +73849,125 @@ var render = function() {
                       1
                     ),
                     _vm._v(" "),
-                    _vm._m(4)
+                    _c("div", { staticClass: "form-row" }, [
+                      _c("div", { staticClass: "form-group col" }, [
+                        _c("div", { staticClass: "form-check" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.role,
+                                expression: "form.role"
+                              }
+                            ],
+                            staticClass: "form-check-input",
+                            attrs: {
+                              type: "radio",
+                              name: "role",
+                              id: "rdoStudent",
+                              value: "Student",
+                              checked: ""
+                            },
+                            domProps: {
+                              checked: _vm._q(_vm.form.role, "Student")
+                            },
+                            on: {
+                              change: function($event) {
+                                _vm.$set(_vm.form, "role", "Student")
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "label",
+                            {
+                              staticClass: "form-check-label",
+                              attrs: { for: "rdoStudent" }
+                            },
+                            [_vm._v("Student")]
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group col" }, [
+                        _c("div", { staticClass: "form-check" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.role,
+                                expression: "form.role"
+                              }
+                            ],
+                            staticClass: "form-check-input",
+                            attrs: {
+                              type: "radio",
+                              name: "role",
+                              id: "rdoLecturer",
+                              value: "Lecturer"
+                            },
+                            domProps: {
+                              checked: _vm._q(_vm.form.role, "Lecturer")
+                            },
+                            on: {
+                              change: function($event) {
+                                _vm.$set(_vm.form, "role", "Lecturer")
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "label",
+                            {
+                              staticClass: "form-check-label",
+                              attrs: { for: "rdoLecturer" }
+                            },
+                            [_vm._v("Lecturer")]
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group col" }, [
+                        _c("div", { staticClass: "form-check" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.role,
+                                expression: "form.role"
+                              }
+                            ],
+                            staticClass: "form-check-input",
+                            attrs: {
+                              type: "radio",
+                              name: "role",
+                              id: "rdoAdmin",
+                              value: "Admin"
+                            },
+                            domProps: {
+                              checked: _vm._q(_vm.form.role, "Admin")
+                            },
+                            on: {
+                              change: function($event) {
+                                _vm.$set(_vm.form, "role", "Admin")
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "label",
+                            {
+                              staticClass: "form-check-label",
+                              attrs: { for: "rdoAdmin" }
+                            },
+                            [_vm._v("Admin")]
+                          )
+                        ])
+                      ])
+                    ])
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "modal-footer" }, [
@@ -73911,48 +74059,6 @@ var staticRenderFns = [
       },
       [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-row" }, [
-      _c("div", { staticClass: "form-group col" }, [
-        _c("div", { staticClass: "form-check" }, [
-          _c("label", { staticClass: "form-check-label" }, [
-            _c("input", {
-              staticClass: "form-check-input",
-              attrs: { type: "checkbox", value: "" }
-            }),
-            _vm._v("Student\n                            ")
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group col" }, [
-        _c("div", { staticClass: "form-check" }, [
-          _c("label", { staticClass: "form-check-label" }, [
-            _c("input", {
-              staticClass: "form-check-input",
-              attrs: { type: "checkbox", value: "" }
-            }),
-            _vm._v("Lecturer\n                            ")
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group col" }, [
-        _c("div", { staticClass: "form-check" }, [
-          _c("label", { staticClass: "form-check-label" }, [
-            _c("input", {
-              staticClass: "form-check-input",
-              attrs: { type: "checkbox", value: "" }
-            }),
-            _vm._v("Administrator\n                            ")
-          ])
-        ])
-      ])
-    ])
   }
 ]
 render._withStripped = true

@@ -88,7 +88,7 @@
                                         <!-- Edit Status using System -->
                                         <div class="form-group col-3">
                                             <div class="form-check form-check-inline">
-                                                <input v-model="form.is_actived" class="form-check-input" type="checkbox" id="isActived">
+                                                <input v-model="form.active" class="form-check-input" type="checkbox" id="isActived">
                                                 <label class="form-check-label" for="isActived">Actived</label>
                                             </div>
                                         </div>
@@ -207,7 +207,7 @@
                     username: '',
                     email: '',
                     password: '',
-                    is_actived: false,
+                    active: false,
                     code: '',
                     first_name: '',
                     last_name: '',
