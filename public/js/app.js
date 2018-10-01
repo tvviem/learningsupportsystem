@@ -73104,12 +73104,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             editmode: false,
-            users: {},
+            users: {}, // load all users in sys
+            roles: [], // Load all roles in system
             form: new Form({
                 id: 0,
                 username: '',
@@ -73121,7 +73125,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 last_name: '',
                 work_place: '',
                 path_avatar: null,
-                role: ''
+                selected_roles: [] // roles of this user when add or update
             })
         };
     },
@@ -73131,29 +73135,53 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.editmode = false;
             this.form.reset();
             $('#addNew').modal('show');
+            // this.form.selected_roles.push('student');
+            this.roles.map(function (role) {
+                return role.checked = role.slug === 'student' ? true : false;
+            }); // set default role
         },
         editModal: function editModal(user) {
             this.editmode = true;
-            // this.form.reset();
+            // let arrStringRole = this.roles.map(x => x.slug) // only get slug column in role
+            // 
+            this.roles.map(function (role) {
+                user.roles.findIndex(function (roleUser) {
+                    roleUser.id === role.id ? role.checked = true : role.checked = false;
+                });
+            });
             $('#addNew').modal('show');
             this.form.fill(user);
         },
         loadUsers: function loadUsers() {
             var _this = this;
 
-            axios.get("../api/user").then(function (_ref) {
+            axios.get("/api/user").then(function (_ref) {
                 var data = _ref.data;
                 return _this.users = data.data;
             });
         },
-        createUser: function createUser() {
+        emptySelectedRoles: function emptySelectedRoles() {
             var _this2 = this;
 
-            // Submit the form via a POST request
-            /* this.form.post('/api/user').then(({ data }) => { console.log(data) })
-            .catch((err)=> {
-                console.log(err)
-            }) */
+            this.form.selected_roles = [];
+            this.roles.forEach(function (role) {
+                if (role.checked) {
+                    _this2.form.selected_roles.push(role.slug);
+                }
+            });
+            if (this.form.selected_roles.length > 0) return false;
+            return true;
+        },
+        createUser: function createUser() {
+            var _this3 = this;
+
+            if (this.emptySelectedRoles()) {
+                toast({
+                    type: 'warning',
+                    title: 'Please select least role of user'
+                });
+                return;
+            }
             this.$Progress.start();
             this.form.post('/api/user').then(function () {
                 Fire.$emit('ReloadUserList');
@@ -73163,34 +73191,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     type: 'success',
                     title: 'User Created in successfully'
                 });
-                _this2.$Progress.finish();
+                _this3.$Progress.finish();
             }).catch(function (error) {
                 toast({
                     type: 'error',
                     title: 'Can not create user!'
                 });
-                _this2.$Progress.fail();
+                _this3.$Progress.fail();
             });
         },
         updateUser: function updateUser() {
-            var _this3 = this;
+            var _this4 = this;
 
             this.$Progress.start();
             this.form.put('../api/user/' + this.form.id).then(function () {
                 Fire.$emit('ReloadUserList');
                 $('#addNew').modal('hide');
                 swal('Updated!', 'Information has been updated.', 'success');
-                _this3.$Progress.finish();
+                _this4.$Progress.finish();
             }).catch(function () {
                 toast({
                     type: 'error',
                     title: 'Update not successfully!'
                 });
-                _this3.$Progress.fail();
+                _this4.$Progress.fail();
             });
         },
         deleteUser: function deleteUser(id) {
-            var _this4 = this;
+            var _this5 = this;
 
             swal({
                 title: 'Are you sure?',
@@ -73202,7 +73230,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 confirmButtonText: 'Yes, delete it!'
             }).then(function (result) {
                 if (result.value) {
-                    _this4.form.delete('../api/user/' + id).then(function () {
+                    _this5.form.delete('/api/user/' + id).then(function () {
                         swal('Deleted!', 'A user has been deleted.', 'success');
                         Fire.$emit('ReloadUserList');
                     }).catch(function () {
@@ -73213,14 +73241,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     created: function created() {
-        var _this5 = this;
+        var _this6 = this;
 
-        this.loadUsers();
         Fire.$on('ReloadUserList', function () {
-            _this5.loadUsers();
+            _this6.loadUsers();
         });
+
         // Reload user list after 3 second
         // setInterval(() => this.loadUsers(), 3000);
+    },
+    mounted: function mounted() {
+        var _this7 = this;
+
+        this.loadUsers();
+        axios.get('/api/role').then(function (response) {
+            // this.form.selected_roles=response.data;
+            return response.data;
+        }).then(function (allRoles) {
+            allRoles.forEach(function (role) {
+                var roleCustom = { id: role.id, slug: role.slug, checked: false
+                    // this.form.selected_roles.push(roleCustom);
+                };_this7.roles.push(roleCustom);
+                // console.log('Adding checked property: ' + this.form.selected_roles);
+            });
+        }).catch(function (err) {
+            console.log(err);
+        });
     }
 });
 
@@ -73317,7 +73363,18 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(user.last_name))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(user.work_place))]),
+                      _c(
+                        "td",
+                        _vm._l(user.roles, function(role) {
+                          return _c("span", { key: role.id }, [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(role.slug) +
+                                "\n                    "
+                            )
+                          ])
+                        })
+                      ),
                       _vm._v(" "),
                       _c("td", [
                         _vm._v(_vm._s(_vm._f("showDate")(user.created_at)))
@@ -73336,35 +73393,39 @@ var render = function() {
                               }
                             }
                           },
-                          [_c("i", { staticClass: "fa fa-edit blue" })]
+                          [_c("i", { staticClass: "fa fa-edit blue " })]
                         ),
                         _vm._v(" "),
-                        !(user.id === 1)
-                          ? _c("span", [
-                              _vm._v(
-                                "\n                        |\n                        "
-                              ),
-                              _vm._m(2, true),
-                              _vm._v(
-                                "\n                        |\n                        "
-                              ),
-                              _c(
-                                "a",
-                                {
-                                  attrs: {
-                                    href: "#",
-                                    title: "Delete this user"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.deleteUser(user.id)
-                                    }
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: !(user.id === 1),
+                                expression: "!(user.id===1)"
+                              }
+                            ]
+                          },
+                          [
+                            _vm._v(
+                              "\n                        |\n                        "
+                            ),
+                            _c(
+                              "a",
+                              {
+                                attrs: { href: "#", title: "Delete this user" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.deleteUser(user.id)
                                   }
-                                },
-                                [_c("i", { staticClass: "fa fa-trash red" })]
-                              )
-                            ])
-                          : _vm._e()
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-trash red" })]
+                            )
+                          ]
+                        )
                       ])
                     ])
                   })
@@ -73403,7 +73464,7 @@ var render = function() {
                   _vm._v(_vm._s(_vm.editmode ? "Update User Info" : "Add New"))
                 ]),
                 _vm._v(" "),
-                _vm._m(3)
+                _vm._m(2)
               ]),
               _vm._v(" "),
               _c(
@@ -73849,124 +73910,86 @@ var render = function() {
                       1
                     ),
                     _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-row" },
+                      _vm._l(_vm.roles, function(role) {
+                        return _c(
+                          "div",
+                          { key: role.id, staticClass: "form-group col" },
+                          [
+                            _c("div", { staticClass: "form-check" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: role.checked,
+                                    expression: "role.checked"
+                                  }
+                                ],
+                                staticClass: "form-check-input",
+                                attrs: { type: "checkbox", id: role.id },
+                                domProps: {
+                                  value: role.slug,
+                                  checked: Array.isArray(role.checked)
+                                    ? _vm._i(role.checked, role.slug) > -1
+                                    : role.checked
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$a = role.checked,
+                                      $$el = $event.target,
+                                      $$c = $$el.checked ? true : false
+                                    if (Array.isArray($$a)) {
+                                      var $$v = role.slug,
+                                        $$i = _vm._i($$a, $$v)
+                                      if ($$el.checked) {
+                                        $$i < 0 &&
+                                          _vm.$set(
+                                            role,
+                                            "checked",
+                                            $$a.concat([$$v])
+                                          )
+                                      } else {
+                                        $$i > -1 &&
+                                          _vm.$set(
+                                            role,
+                                            "checked",
+                                            $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1))
+                                          )
+                                      }
+                                    } else {
+                                      _vm.$set(role, "checked", $$c)
+                                    }
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "form-check-label",
+                                  attrs: { for: role.id }
+                                },
+                                [_vm._v(_vm._s(role.slug))]
+                              )
+                            ])
+                          ]
+                        )
+                      })
+                    ),
+                    _vm._v(" "),
                     _c("div", { staticClass: "form-row" }, [
-                      _c("div", { staticClass: "form-group col" }, [
-                        _c("div", { staticClass: "form-check" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.role,
-                                expression: "form.role"
-                              }
-                            ],
-                            staticClass: "form-check-input",
-                            attrs: {
-                              type: "radio",
-                              name: "role",
-                              id: "rdoStudent",
-                              value: "Student",
-                              checked: ""
-                            },
-                            domProps: {
-                              checked: _vm._q(_vm.form.role, "Student")
-                            },
-                            on: {
-                              change: function($event) {
-                                _vm.$set(_vm.form, "role", "Student")
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "label",
-                            {
-                              staticClass: "form-check-label",
-                              attrs: { for: "rdoStudent" }
-                            },
-                            [_vm._v("Student")]
-                          )
-                        ])
+                      _c("span", [
+                        _vm._v(
+                          "role selected of Roles: " + _vm._s(_vm.roles) + " "
+                        )
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "form-group col" }, [
-                        _c("div", { staticClass: "form-check" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.role,
-                                expression: "form.role"
-                              }
-                            ],
-                            staticClass: "form-check-input",
-                            attrs: {
-                              type: "radio",
-                              name: "role",
-                              id: "rdoLecturer",
-                              value: "Lecturer"
-                            },
-                            domProps: {
-                              checked: _vm._q(_vm.form.role, "Lecturer")
-                            },
-                            on: {
-                              change: function($event) {
-                                _vm.$set(_vm.form, "role", "Lecturer")
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "label",
-                            {
-                              staticClass: "form-check-label",
-                              attrs: { for: "rdoLecturer" }
-                            },
-                            [_vm._v("Lecturer")]
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "form-group col" }, [
-                        _c("div", { staticClass: "form-check" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.role,
-                                expression: "form.role"
-                              }
-                            ],
-                            staticClass: "form-check-input",
-                            attrs: {
-                              type: "radio",
-                              name: "role",
-                              id: "rdoAdmin",
-                              value: "Admin"
-                            },
-                            domProps: {
-                              checked: _vm._q(_vm.form.role, "Admin")
-                            },
-                            on: {
-                              change: function($event) {
-                                _vm.$set(_vm.form, "role", "Admin")
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "label",
-                            {
-                              staticClass: "form-check-label",
-                              attrs: { for: "rdoAdmin" }
-                            },
-                            [_vm._v("Admin")]
-                          )
-                        ])
-                      ])
+                      _c("br")
                     ])
                   ]),
                   _vm._v(" "),
@@ -74016,7 +74039,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", [_vm._v("Last Name")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Workplace")]),
+      _c("th", [_vm._v("Roles")]),
       _vm._v(" "),
       _c("th", [_vm._v("Created_at")]),
       _vm._v(" "),
@@ -74032,16 +74055,6 @@ var staticRenderFns = [
     return _c("td", [
       _c("span", { staticClass: "tag tag-success" }, [_vm._v("On/offline")])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      { attrs: { href: "#", title: "View and Edit role of this user" } },
-      [_c("i", { staticClass: "fa fa-user-tag yellow" })]
-    )
   },
   function() {
     var _vm = this

@@ -21,7 +21,7 @@
                     <th>Actived</th>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th>Workplace</th>
+                    <th>Roles</th>
                     <th>Created_at</th>
                     <th>Status</th>
                     <th>Modify</th>
@@ -33,15 +33,17 @@
                     <td style="text-align: center"><input type="checkbox" v-model="user.active" disabled/></td>
                     <td>{{ user.first_name }}</td>
                     <td>{{ user.last_name }}</td>
-                    <td>{{ user.work_place }}</td>
+                    <td>
+                        <span v-for="role in user.roles" :key="role.id">
+                            {{role.slug }}
+                        </span>
+                    </td>
                     <td>{{ user.created_at | showDate }}</td>
                     <td><span class="tag tag-success">On/offline</span></td>
                     <td>
-                        <a href="#" title="Edit User info" @click="editModal(user)"><i class="fa fa-edit blue"></i></a>
+                        <a href="#" title="Edit User info" @click="editModal(user)"><i class="fa fa-edit blue "></i></a>
                         <!-- Except admin role with id=1 -->
-                        <span v-if="!(user.id===1)">
-                            |
-                            <a href="#" title="View and Edit role of this user"><i class="fa fa-user-tag yellow"></i></a>
+                        <span v-show="!(user.id===1)">
                             |
                             <a href="#" title="Delete this user" @click="deleteUser(user.id)"><i class="fa fa-trash red"></i></a>
                         </span>
@@ -123,25 +125,26 @@
                             class="form-control" :class="{ 'is-invalid': form.errors.has('path_avatar') }">
                         <has-error :form="form" field="path_avatar"></has-error>
                     </div>
+                    <!-- Show all roles in system, mode: add new -->
                     <div class="form-row">
-                        <div class="form-group col">
+                        <div class="form-group col" v-for="role in roles" :key="role.id">
                             <div class="form-check">
-                                <input type="radio" class="form-check-input" name="role" id="rdoStudent" value="Student" v-model="form.role" checked>
-                                <label class="form-check-label" for="rdoStudent">Student</label>
+                                <input type="checkbox" class="form-check-input" :id="role.id" :value="role.slug" v-model="role.checked">
+                                <label class="form-check-label" :for="role.id">{{role.slug}}</label>
                             </div>
                         </div>
-                        <div class="form-group col">
+                    </div>
+                    <!-- <div class="form-row" v-show="editmode">
+                        <div class="form-group col" v-for="role in roles" :key="role.id">
                             <div class="form-check">
-                                <input type="radio" class="form-check-input" name="role" id="rdoLecturer" value="Lecturer" v-model="form.role">
-                                <label class="form-check-label" for="rdoLecturer">Lecturer</label>
+                                <input type="checkbox" class="form-check-input" :id="role.id" :value="role.slug" :checked="form.selected_roles.findIndex(roleUser=>roleUser.id===role.id)>=0?true:false">
+                                <input type="checkbox" class="form-check-input" :id="role.id" :value="role.slug" v-model="role.checked">
+                                <label class="form-check-label" :for="role.id">{{role.slug}}</label>
                             </div>
                         </div>
-                        <div class="form-group col">
-                            <div class="form-check">
-                                <input type="radio" class="form-check-input" name="role" id="rdoAdmin" value="Admin" v-model="form.role">
-                                <label class="form-check-label" for="rdoAdmin">Admin</label>
-                            </div>
-                        </div>
+                    </div> -->
+                    <div class="form-row">
+                        <span>role selected of Roles: {{ roles }} </span> <br>
                     </div>
                 </div>
             
@@ -161,7 +164,8 @@
         data() {
             return {
                 editmode: false,
-                users: {},
+                users: {}, // load all users in sys
+                roles: [], // Load all roles in system
                 form: new Form({
                     id: 0,
                     username: '',
@@ -173,7 +177,7 @@
                     last_name: '',
                     work_place: '',
                     path_avatar: null,
-                    role: ''
+                    selected_roles: [] // roles of this user when add or update
                 })
             }
         },
@@ -182,22 +186,43 @@
                 this.editmode = false;
                 this.form.reset();
                 $('#addNew').modal('show');
+                // this.form.selected_roles.push('student');
+                this.roles.map(role => role.checked=(role.slug==='student'?true:false)); // set default role
             },
             editModal(user) {
                 this.editmode = true;
-                // this.form.reset();
+                // let arrStringRole = this.roles.map(x => x.slug) // only get slug column in role
+                // 
+                this.roles.map(role => {
+                    user.roles.findIndex(roleUser => {
+                      (roleUser.id===role.id)?role.checked=true:role.checked=false;
+                    });
+                });
                 $('#addNew').modal('show');
                 this.form.fill(user);
             },
             loadUsers() {
-                axios.get("../api/user").then(({ data }) => (this.users = data.data));
+                axios.get("/api/user").then(({ data }) => (this.users = data.data));
+            },
+            emptySelectedRoles() {
+                this.form.selected_roles = [];
+                this.roles.forEach(role => {
+                    if(role.checked) {
+                        this.form.selected_roles.push(role.slug);
+                    }
+                });
+                if(this.form.selected_roles.length>0)
+                    return false;
+                return true;
             },
             createUser() {
-                // Submit the form via a POST request
-                /* this.form.post('/api/user').then(({ data }) => { console.log(data) })
-                .catch((err)=> {
-                    console.log(err)
-                }) */
+                if(this.emptySelectedRoles()) {
+                    toast({
+                        type: 'warning',
+                        title: 'Please select least role of user'
+                    });
+                    return;
+                }
                 this.$Progress.start();
                 this.form.post('/api/user')
                 .then(()=>{
@@ -245,25 +270,44 @@
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Yes, delete it!'
-                    }).then((result) => {
-                        if (result.value) {
-                            this.form.delete('../api/user/' + id).then(() => {
-                                swal('Deleted!', 'A user has been deleted.', 'success');
-                                Fire.$emit('ReloadUserList');
-                            }).catch(() => {
-                                swal('Failed!', 'There was something wrongs.', 'warning');
-                            });
-                        }
-                    })
+                }).then((result) => {
+                    if (result.value) {
+                        this.form.delete('/api/user/' + id).then(() => {
+                            swal('Deleted!', 'A user has been deleted.', 'success');
+                            Fire.$emit('ReloadUserList');
+                        }).catch(() => {
+                            swal('Failed!', 'There was something wrongs.', 'warning');
+                        });
+                    }
+                })
             }
+            
         },
         created() {
-            this.loadUsers();
             Fire.$on('ReloadUserList', () => {
                 this.loadUsers();
             })
+            
             // Reload user list after 3 second
             // setInterval(() => this.loadUsers(), 3000);
+        },
+        mounted() {
+            this.loadUsers();
+            axios.get('/api/role').then(response => {
+                // this.form.selected_roles=response.data;
+                return response.data;
+            })
+            .then(allRoles => {
+                allRoles.forEach(role => {
+                    let roleCustom = {id:role.id, slug:role.slug, checked: false}
+                    // this.form.selected_roles.push(roleCustom);
+                    this.roles.push(roleCustom);
+                    // console.log('Adding checked property: ' + this.form.selected_roles);
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            });
         }
     }
 </script>

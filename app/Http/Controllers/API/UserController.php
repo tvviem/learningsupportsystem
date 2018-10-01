@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::latest()->paginate(10);
+        return User::latest()->with('roles')->paginate(10);
     }
 
     /**
@@ -55,7 +55,12 @@ class UserController extends Controller
         $newUser->active = $request['active'];
         $newUser->activation_token = str_random(60);
         $newUser->save();
-        $newUser->giveRolesForUser($request['role']);
+        /* $roles=array();  // array of strings role 
+        foreach ($request['selected_roles'] as $key => $value) {
+            array_push($roles, $value);
+        } */
+        dd($request['selected_roles']);
+        $newUser->giveRolesForUser($request['selected_roles']);
         return $newUser;
         /* return User::create([
             'username' => $request['username'],
@@ -105,6 +110,7 @@ class UserController extends Controller
             'last_name' => 'required|string|max:15',
             'first_name' => 'required|string|max:45'
         ]);
+        $request['password'] = Hash::make($request['password']);
         $user->update($request->all());
         return ['message' => 'Updated user info!!!'];
     }

@@ -14,17 +14,14 @@ Route::get('profile', 'API\UserController@profile');
 
 Route::group(['middleware' => 'role:admin'], function() {
     Route::apiResources(['user' => 'API\UserController']);
-    Route::post('register','Auth\RegisterController@create');
-    Route::get('register/activate/{token}', 'Auth\RegisterController@signupActivate');
 });
-/* Route::group(['prefix' => 'auth'], function () {
-    Route::post('login', 'AuthController@login');
-    Route::post('register', 'RegisterController');
-    Route::get('signup/activate/{token}', 'AuthController@signupActivate');
-    Route::group([
-      'middleware' => 'auth:api'
-    ], function() {
-        Route::get('logout', 'AuthController@logout');
-        Route::get('user', 'AuthController@user');
-    });
-}); */
+Route::post('register','Auth\RegisterController@create');
+Route::get('register/activate/{token}', 'Auth\RegisterController@signupActivate');
+
+Route::resource('role', 'API\RoleController')->only([
+    'index', 'show'
+]);
+
+/* Route::resource('photos', 'PhotoController')->except([
+    'create', 'store', 'update', 'destroy'
+]); */

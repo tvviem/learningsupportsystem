@@ -12,7 +12,7 @@ class Role extends Model
      * @var array
      */
     /* protected $fillable = [
-        'role_name', 'role_description'
+        'id', 'slug', 'name'
     ]; */
 
     // black list 

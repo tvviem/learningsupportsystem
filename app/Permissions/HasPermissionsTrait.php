@@ -52,7 +52,7 @@ trait HasPermissionsTrait {
      * we want to give a set of permissions to a logged in user, here’s how we can achieve this
      * 
      */
-    public function givePermissionsTo(... $permissions) {
+    public function givePermissionsTo(...$permissions) {
         $permissions = $this->getAllPermissions($permissions);
         // dd($permissions);
         if($permissions === null) {
@@ -67,7 +67,7 @@ trait HasPermissionsTrait {
         return $this;
     } */
 
-    public function withdrawPermissionsTo( ... $permissions ) {
+    public function withdrawPermissionsTo( ...$permissions ) {
 		$permissions = $this->getAllPermissions($permissions);
 		$this->permissions()->detach($permissions);
 		return $this;
@@ -83,7 +83,7 @@ trait HasPermissionsTrait {
         $roles = $this->getAllRoles($roles);
         $this->roles()->detach($roles);
         return $this;
-    } 
+    }
     public function refreshPermissions( ... $permissions ) {
 		$this->permissions()->detach();
 		return $this->givePermissionsTo($permissions);
