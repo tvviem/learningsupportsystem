@@ -67,6 +67,7 @@
                 </button>
             </div>
             <form @submit.prevent="editmode ? updateUser() : createUser()">
+                {{csrf}}
                 <div class="modal-body">
                     <div class="form-row">
                         <div class="form-group col">
@@ -143,9 +144,10 @@
                             </div>
                         </div>
                     </div> -->
-                    <div class="form-row">
+                    <!-- Test 
+                        <div class="form-row">
                         <span>role selected of Roles: {{ roles }} </span> <br>
-                    </div>
+                    </div> -->
                 </div>
             
                 <div class="modal-footer">
@@ -165,7 +167,7 @@
             return {
                 editmode: false,
                 users: {}, // load all users in sys
-                roles: [], // Load all roles in system
+                roles: [], // Load all exist roles in system
                 form: new Form({
                     id: 0,
                     username: '',
@@ -177,7 +179,7 @@
                     last_name: '',
                     work_place: '',
                     path_avatar: null,
-                    selected_roles: [] // roles of this user when add or update
+                    selected_roles: [] // roles of this user when send request insert/update
                 })
             }
         },
@@ -192,10 +194,11 @@
             editModal(user) {
                 this.editmode = true;
                 // let arrStringRole = this.roles.map(x => x.slug) // only get slug column in role
-                // 
-                this.roles.map(role => {
-                    user.roles.findIndex(roleUser => {
-                      (roleUser.id===role.id)?role.checked=true:role.checked=false;
+                this.roles.map(role => role.checked = false);
+                user.roles.forEach(roleUser => {
+                    this.roles.map(role => {
+                        if(roleUser.id===role.id)
+                            role.checked=true;
                     });
                 });
                 $('#addNew').modal('show');
@@ -245,8 +248,15 @@
                 
             },
             updateUser() {
+                if(this.emptySelectedRoles()) {
+                    toast({
+                        type: 'warning',
+                        title: 'Please select least a role of user'
+                    });
+                    return;
+                }
                 this.$Progress.start();
-                this.form.put('../api/user/' + this.form.id)
+                this.form.put('/api/user/' + this.form.id)
                 .then(() => {
                     Fire.$emit('ReloadUserList');
                     $('#addNew').modal('hide');

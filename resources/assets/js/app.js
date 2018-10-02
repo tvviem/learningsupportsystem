@@ -56,7 +56,7 @@ let routes = [
     { path: '/admin/manage-passport', component: require('./components/admin/Developer.vue') }
 ]
 const router = new VueRouter({
-    mode: 'hash',
+    mode: 'history',
     routes // short for `routes: routes`
 })
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\User;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -55,17 +56,6 @@ class UserController extends Controller
         $newUser->active = $request['active'];
         $newUser->activation_token = str_random(60);
         $newUser->save();
-        /* $roles=array();  // array of strings role
-        foreach ($request['selected_roles'] as $key => $value) {
-            array_push($roles, $value);
-        } */
-        // dd($request['selected_roles'][0]);
-        // echo($request['selected_roles']);
-        // $newUser->giveRolesTo($roles);
-
-        // $roleSlugs = array_values($request['selected_roles']);
-        // $newUser->giveRolesTo(...$roleSlugs);
-        // $newUser->giveRolesTo('student', 'lecturer');
         $newUser->giveRolesTo(...$request['selected_roles']); // multi-roles
 
         return $newUser;
@@ -102,12 +92,15 @@ class UserController extends Controller
             'username' => 'required|string|max:40|unique:users,username,'.$user->id,
             'email' => 'required|string|email|max:100|unique:users,email,'.$user->id,
             'password' => 'sometimes|min:6',
-            'last_name' => 'required|string|max:15',
-            'first_name' => 'required|string|max:45'
+            'last_name' => 'required|string|max:45',
+            'first_name' => 'required|string|max:15'
         ]);
         $request['password'] = Hash::make($request['password']);
-        $user->update($request->all());
-        return ['message' => 'Updated user info!!!'];
+        $user->update($request->except('selected_roles'));
+        
+        DB::table('users_roles')->where('user_id', '=', $user->id)->delete(); // Bad idea temp data increment
+        $user->giveRolesTo(...$request['selected_roles']); // multi-roles
+        return $user;
     }
 
     /**

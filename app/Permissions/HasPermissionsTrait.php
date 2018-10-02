@@ -79,7 +79,7 @@ trait HasPermissionsTrait {
         $this->roles()->detach($roles);
         return $this;
     }
-    public function refreshPermissions(...$permissions ) {
+    public function refreshPermissions(...$permissions) {
 		$this->permissions()->detach();
 		return $this->givePermissionsTo($permissions);
     }

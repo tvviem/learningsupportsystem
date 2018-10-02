@@ -30759,7 +30759,7 @@ window.Form = __WEBPACK_IMPORTED_MODULE_4_vform__["Form"];
 
 var routes = [{ path: '/profile', component: __webpack_require__(172) }, { path: '/admin/dashboard', component: __webpack_require__(178) }, { path: '/admin/manage-users', component: __webpack_require__(181) }, { path: '/admin/manage-grant-permissions', component: __webpack_require__(184) }, { path: '/admin/manage-fields-branches', component: __webpack_require__(187) }, { path: '/admin/manage-passport', component: __webpack_require__(190) }];
 var router = new __WEBPACK_IMPORTED_MODULE_2_vue_router__["a" /* default */]({
-    mode: 'hash',
+    mode: 'history',
     routes: routes // short for `routes: routes`
 });
 
@@ -73107,13 +73107,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             editmode: false,
             users: {}, // load all users in sys
-            roles: [], // Load all roles in system
+            roles: [], // Load all exist roles in system
             form: new Form({
                 id: 0,
                 username: '',
@@ -73125,7 +73127,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 last_name: '',
                 work_place: '',
                 path_avatar: null,
-                selected_roles: [] // roles of this user when add or update
+                selected_roles: [] // roles of this user when send request insert/update
             })
         };
     },
@@ -73141,39 +73143,43 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }); // set default role
         },
         editModal: function editModal(user) {
+            var _this = this;
+
             this.editmode = true;
             // let arrStringRole = this.roles.map(x => x.slug) // only get slug column in role
-            // 
             this.roles.map(function (role) {
-                user.roles.findIndex(function (roleUser) {
-                    roleUser.id === role.id ? role.checked = true : role.checked = false;
+                return role.checked = false;
+            });
+            user.roles.forEach(function (roleUser) {
+                _this.roles.map(function (role) {
+                    if (roleUser.id === role.id) role.checked = true;
                 });
             });
             $('#addNew').modal('show');
             this.form.fill(user);
         },
         loadUsers: function loadUsers() {
-            var _this = this;
+            var _this2 = this;
 
             axios.get("/api/user").then(function (_ref) {
                 var data = _ref.data;
-                return _this.users = data.data;
+                return _this2.users = data.data;
             });
         },
         emptySelectedRoles: function emptySelectedRoles() {
-            var _this2 = this;
+            var _this3 = this;
 
             this.form.selected_roles = [];
             this.roles.forEach(function (role) {
                 if (role.checked) {
-                    _this2.form.selected_roles.push(role.slug);
+                    _this3.form.selected_roles.push(role.slug);
                 }
             });
             if (this.form.selected_roles.length > 0) return false;
             return true;
         },
         createUser: function createUser() {
-            var _this3 = this;
+            var _this4 = this;
 
             if (this.emptySelectedRoles()) {
                 toast({
@@ -73191,34 +73197,41 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     type: 'success',
                     title: 'User Created in successfully'
                 });
-                _this3.$Progress.finish();
+                _this4.$Progress.finish();
             }).catch(function (error) {
                 toast({
                     type: 'error',
                     title: 'Can not create user!'
                 });
-                _this3.$Progress.fail();
+                _this4.$Progress.fail();
             });
         },
         updateUser: function updateUser() {
-            var _this4 = this;
+            var _this5 = this;
 
+            if (this.emptySelectedRoles()) {
+                toast({
+                    type: 'warning',
+                    title: 'Please select least a role of user'
+                });
+                return;
+            }
             this.$Progress.start();
-            this.form.put('../api/user/' + this.form.id).then(function () {
+            this.form.put('/api/user/' + this.form.id).then(function () {
                 Fire.$emit('ReloadUserList');
                 $('#addNew').modal('hide');
                 swal('Updated!', 'Information has been updated.', 'success');
-                _this4.$Progress.finish();
+                _this5.$Progress.finish();
             }).catch(function () {
                 toast({
                     type: 'error',
                     title: 'Update not successfully!'
                 });
-                _this4.$Progress.fail();
+                _this5.$Progress.fail();
             });
         },
         deleteUser: function deleteUser(id) {
-            var _this5 = this;
+            var _this6 = this;
 
             swal({
                 title: 'Are you sure?',
@@ -73230,7 +73243,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 confirmButtonText: 'Yes, delete it!'
             }).then(function (result) {
                 if (result.value) {
-                    _this5.form.delete('/api/user/' + id).then(function () {
+                    _this6.form.delete('/api/user/' + id).then(function () {
                         swal('Deleted!', 'A user has been deleted.', 'success');
                         Fire.$emit('ReloadUserList');
                     }).catch(function () {
@@ -73241,17 +73254,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     created: function created() {
-        var _this6 = this;
+        var _this7 = this;
 
         Fire.$on('ReloadUserList', function () {
-            _this6.loadUsers();
+            _this7.loadUsers();
         });
 
         // Reload user list after 3 second
         // setInterval(() => this.loadUsers(), 3000);
     },
     mounted: function mounted() {
-        var _this7 = this;
+        var _this8 = this;
 
         this.loadUsers();
         axios.get('/api/role').then(function (response) {
@@ -73261,7 +73274,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             allRoles.forEach(function (role) {
                 var roleCustom = { id: role.id, slug: role.slug, checked: false
                     // this.form.selected_roles.push(roleCustom);
-                };_this7.roles.push(roleCustom);
+                };_this8.roles.push(roleCustom);
                 // console.log('Adding checked property: ' + this.form.selected_roles);
             });
         }).catch(function (err) {
@@ -73478,6 +73491,9 @@ var render = function() {
                   }
                 },
                 [
+                  _vm._v(
+                    "\n            " + _vm._s(_vm.csrf) + "\n            "
+                  ),
                   _c("div", { staticClass: "modal-body" }, [
                     _c("div", { staticClass: "form-row" }, [
                       _c(
@@ -73980,17 +73996,7 @@ var render = function() {
                           ]
                         )
                       })
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-row" }, [
-                      _c("span", [
-                        _vm._v(
-                          "role selected of Roles: " + _vm._s(_vm.roles) + " "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("br")
-                    ])
+                    )
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "modal-footer" }, [
