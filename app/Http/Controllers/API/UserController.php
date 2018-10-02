@@ -55,25 +55,20 @@ class UserController extends Controller
         $newUser->active = $request['active'];
         $newUser->activation_token = str_random(60);
         $newUser->save();
-        /* $roles=array();  // array of strings role 
+        /* $roles=array();  // array of strings role
         foreach ($request['selected_roles'] as $key => $value) {
             array_push($roles, $value);
         } */
-        dd($request['selected_roles']);
-        $newUser->giveRolesForUser($request['selected_roles']);
+        // dd($request['selected_roles'][0]);
+        // echo($request['selected_roles']);
+        // $newUser->giveRolesTo($roles);
+
+        // $roleSlugs = array_values($request['selected_roles']);
+        // $newUser->giveRolesTo(...$roleSlugs);
+        // $newUser->giveRolesTo('student', 'lecturer');
+        $newUser->giveRolesTo(...$request['selected_roles']); // multi-roles
+
         return $newUser;
-        /* return User::create([
-            'username' => $request['username'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password']),
-            'first_name' => $request['first_name'],
-            'last_name' => $request['last_name'],
-            'work_place' => $request['work_place'],
-            'code' => $request['code'],
-            'path_avatar' => $request['path_avatar'],
-            'active' => $request['active'],
-            'activation_token' => str_random(60)
-        ]); */
     }
 
     /**

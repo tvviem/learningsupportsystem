@@ -18,7 +18,7 @@ trait HasPermissionsTrait {
      *      $user = $request->user(); //getting the current logged in user
      *      dd($user->hasRole('admin','editor')); // and so on
      * */
-    public function hasRole( ... $roles ) {
+    public function hasRole(...$roles) {
         foreach ($roles as $role) {
            if ($this->roles->contains('slug', $role)) {
               return true;
@@ -54,37 +54,32 @@ trait HasPermissionsTrait {
      */
     public function givePermissionsTo(...$permissions) {
         $permissions = $this->getAllPermissions($permissions);
-        // dd($permissions);
         if($permissions === null) {
            return $this;
         }
         $this->permissions()->saveMany($permissions);
         return $this;
     }
-    /* public function deletePermissions( ... $permissions ) {
-        $permissions = $this->getAllPermissions($permissions);
-        $this->permissions()->detach($permissions);
-        return $this;
-    } */
 
-    public function withdrawPermissionsTo( ...$permissions ) {
+    public function withdrawPermissionsTo(...$permissions) {
 		$permissions = $this->getAllPermissions($permissions);
 		$this->permissions()->detach($permissions);
 		return $this;
     }
-    public function giveRolesForUser(... $roles) {
+    public function giveRolesTo(...$roles) {
         $roles = $this->getAllRoles($roles);
         if($roles===null)
             return $this;
+        // dd($roles);
         $this->roles()->saveMany($roles);
         return $this;
     }
-    public function withdrawRolesTo(... $roles) {
+    public function withdrawRolesTo(...$roles) {
         $roles = $this->getAllRoles($roles);
         $this->roles()->detach($roles);
         return $this;
     }
-    public function refreshPermissions( ... $permissions ) {
+    public function refreshPermissions(...$permissions ) {
 		$this->permissions()->detach();
 		return $this->givePermissionsTo($permissions);
     }
