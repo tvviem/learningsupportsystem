@@ -16,6 +16,9 @@ Route::group(['middleware' => 'role:admin'], function() {
     Route::apiResources(['user' => 'API\UserController']);
 });
 Route::post('register','Auth\RegisterController@create');
+
+// learnsys.blu/api/register/activate.......
+// Kich hoat tu email
 Route::get('register/activate/{token}', 'Auth\RegisterController@signupActivate');
 
 Route::resource('role', 'API\RoleController')->only([

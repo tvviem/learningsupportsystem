@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Notifications\SignupActivate;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -29,7 +32,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    // protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -53,8 +56,8 @@ class RegisterController extends Controller
             'username' => 'required|string|max:40|unique:users',
             'email' => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            'first_name' => 'required|string|max:45',
-            'last_name' => 'required|string|max:15',
+            'first_name' => 'required|string|max:15',
+            'last_name' => 'required|string|max:45',
             'work_place' => 'required|string|max:40',
             'code' => 'required|string|max:14',
         ]);
@@ -77,11 +80,14 @@ class RegisterController extends Controller
             'work_place' => $data['work_place'],
             'code' => $data['code'],
             'activation_token' => str_random(60),
-            'role_id' => 3
         ]);
-        $user->notify(new SignupActivate($user));
+        if($user) { // tao thanh cong
+            // return redirect('/login')->with('info', 'Your account have created. Please check email to confirm your account');
+            $user->notify(new SignupActivate($user)); // Send email confirm
+            return $user;
+        }
         // Show message request confirm in email box
-        return view('/');
+        return back()->withInput()->with('error', 'User registered unsuccessful!');
     }
     
     // Kich hoat tai khoan qua email
@@ -95,6 +101,29 @@ class RegisterController extends Controller
         $user->active = true;
         $user->activation_token = '';
         $user->save();
-        return $user;
+        $user->giveRolesTo('student'); // multi-roles
+        // Thong bao da kich hoat tai khoan
+        // Sau vai giay chuyen huong dang nhap
+        // HOAC CO THE CHUYEN HUONG cho phep dang nhap tu dong...
+        return redirect()->route('login')->with('info', 'You have activated successful your account!');
+    }
+
+    // override register method to adjust to you
+    public function register(Request $request) {
+        /* if(auth()->attempt(['email'=>$request->email,'password'=>$request->password])){
+            // dd(auth()->user()->active==1);
+
+            if(auth()->user()->active==0) {
+                Auth::logout();
+                // return back()->with('warning', 'Your account has not yet been activated. Please check Your email');
+            }
+            return redirect('/login');
+        } */
+        
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        return redirect()->route('login')->with('info', 'Your account have created. Please check email to confirm your account');
     }
 }

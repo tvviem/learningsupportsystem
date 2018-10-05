@@ -41,9 +41,9 @@
                     <td>{{ user.created_at | showDate }}</td>
                     <td><span class="tag tag-success">On/offline</span></td>
                     <td>
-                        <a href="#" title="Edit User info" @click="editModal(user)"><i class="fa fa-edit blue "></i></a>
                         <!-- Except admin role with id=1 -->
                         <span v-show="!(user.id===1)">
+                            <a href="#" title="Edit User info" @click="editModal(user)"><i class="fa fa-edit blue "></i></a>
                             |
                             <a href="#" title="Delete this user" @click="deleteUser(user.id)"><i class="fa fa-trash red"></i></a>
                         </span>
@@ -67,7 +67,6 @@
                 </button>
             </div>
             <form @submit.prevent="editmode ? updateUser() : createUser()">
-                {{csrf}}
                 <div class="modal-body">
                     <div class="form-row">
                         <div class="form-group col">

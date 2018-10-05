@@ -95,7 +95,8 @@ class UserController extends Controller
             'last_name' => 'required|string|max:45',
             'first_name' => 'required|string|max:15'
         ]);
-        $request['password'] = Hash::make($request['password']);
+        if($request['password']!='')
+            $request['password'] = Hash::make($request['password']);
         $user->update($request->except('selected_roles'));
         
         DB::table('users_roles')->where('user_id', '=', $user->id)->delete(); // Bad idea temp data increment

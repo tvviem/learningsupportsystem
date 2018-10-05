@@ -143,33 +143,6 @@
                                                 <input type="file" @change="updateProfile" name="photo" class="form-input">
                                             </div>
                                         </div>
-                                        <!-- Update role of user -->
-                                        <div class="form-group col">
-                                            <label class="col-sm-12 control-label">Role of user</label>
-                                            <div class="form-row col">
-                                                <div class="col-4">
-                                                    <div class="form-check">
-                                                        <label class="form-check-label">
-                                                            <input type="checkbox" class="form-check-input" value="">Student
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <div class="form-check">
-                                                        <label class="form-check-label">
-                                                            <input type="checkbox" class="form-check-input" value="">Lecturer
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <div class="form-check">
-                                                        <label class="form-check-label">
-                                                            <input type="checkbox" class="form-check-input" value="">Administrator
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
 
                                     <div class="form-group">

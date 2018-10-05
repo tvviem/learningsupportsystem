@@ -30799,10 +30799,10 @@ window.Popper = __webpack_require__(8).default;
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__(9);
+    window.$ = window.jQuery = __webpack_require__(9);
 
-  __webpack_require__(144);
-  __webpack_require__(145);
+    __webpack_require__(144);
+    __webpack_require__(145);
 } catch (e) {}
 
 /**
@@ -30824,9 +30824,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 var token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
-  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
 /**
@@ -30845,6 +30845,13 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+// My Script ulti message include
+window.setTimeout(function () {
+    $(".alert").fadeTo(500, 0).slideUp(500, function () {
+        $(this).remove();
+    });
+}, 4000);
 
 /***/ }),
 /* 143 */
@@ -71979,33 +71986,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -72560,9 +72540,7 @@ var render = function() {
                             on: { change: _vm.updateProfile }
                           })
                         ])
-                      ]),
-                      _vm._v(" "),
-                      _vm._m(3)
+                      ])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -72701,60 +72679,6 @@ var staticRenderFns = [
     return _c("div", { staticClass: "tab-pane", attrs: { id: "activity" } }, [
       _c("h3", { staticClass: "text-center" }, [
         _vm._v("Display User Activity")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group col" }, [
-      _c("label", { staticClass: "col-sm-12 control-label" }, [
-        _vm._v("Role of user")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-row col" }, [
-        _c("div", { staticClass: "col-4" }, [
-          _c("div", { staticClass: "form-check" }, [
-            _c("label", { staticClass: "form-check-label" }, [
-              _c("input", {
-                staticClass: "form-check-input",
-                attrs: { type: "checkbox", value: "" }
-              }),
-              _vm._v(
-                "Student\n                                                    "
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-4" }, [
-          _c("div", { staticClass: "form-check" }, [
-            _c("label", { staticClass: "form-check-label" }, [
-              _c("input", {
-                staticClass: "form-check-input",
-                attrs: { type: "checkbox", value: "" }
-              }),
-              _vm._v(
-                "Lecturer\n                                                    "
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-4" }, [
-          _c("div", { staticClass: "form-check" }, [
-            _c("label", { staticClass: "form-check-label" }, [
-              _c("input", {
-                staticClass: "form-check-input",
-                attrs: { type: "checkbox", value: "" }
-              }),
-              _vm._v(
-                "Administrator\n                                                    "
-              )
-            ])
-          ])
-        ])
       ])
     ])
   }
@@ -72946,7 +72870,6 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
 //
 //
 //
@@ -73397,19 +73320,6 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [
                         _c(
-                          "a",
-                          {
-                            attrs: { href: "#", title: "Edit User info" },
-                            on: {
-                              click: function($event) {
-                                _vm.editModal(user)
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "fa fa-edit blue " })]
-                        ),
-                        _vm._v(" "),
-                        _c(
                           "span",
                           {
                             directives: [
@@ -73422,6 +73332,18 @@ var render = function() {
                             ]
                           },
                           [
+                            _c(
+                              "a",
+                              {
+                                attrs: { href: "#", title: "Edit User info" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.editModal(user)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-edit blue " })]
+                            ),
                             _vm._v(
                               "\n                        |\n                        "
                             ),
@@ -73491,9 +73413,6 @@ var render = function() {
                   }
                 },
                 [
-                  _vm._v(
-                    "\n            " + _vm._s(_vm.csrf) + "\n            "
-                  ),
                   _c("div", { staticClass: "modal-body" }, [
                     _c("div", { staticClass: "form-row" }, [
                       _c(
