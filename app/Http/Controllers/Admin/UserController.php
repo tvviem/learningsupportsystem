@@ -19,6 +19,7 @@ class UserController extends Controller
     {
         $this->middleware('auth:api');
     }
+    
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +28,20 @@ class UserController extends Controller
     public function index()
     {
         return User::latest()->with('roles')->paginate(10);
+        // return User::all()->with('roles');
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function users()
+    {
+        // return User::latest()->with('roles')->paginate(10);
+        return User::all();
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -52,7 +66,8 @@ class UserController extends Controller
         $newUser->last_name = $request['last_name'];
         $newUser->work_place = $request['work_place'];
         $newUser->code = $request['code'];
-        $newUser->path_avatar = $request['path_avatar'];
+        if($request['path_avatar']!='')
+            $newUser->path_avatar = $request['path_avatar'];
         $newUser->active = $request['active'];
         $newUser->activation_token = str_random(60);
         $newUser->save();

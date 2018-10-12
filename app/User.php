@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Laravel\Passport\HasApiTokens;
+// use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,7 +10,8 @@ use App\Permissions\HasPermissionsTrait;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasPermissionsTrait, HasApiTokens, SoftDeletes;
+    //use Notifiable, HasPermissionsTrait, HasApiTokens, SoftDeletes;
+    use Notifiable, HasPermissionsTrait, SoftDeletes;
 
     protected $dates = ['deleted_at'];
     /**

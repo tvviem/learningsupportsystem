@@ -37,7 +37,7 @@ class UsersTableSeeder extends Seeder
         $admin = new User();
         $admin->username = 'tvviem';
         $admin->email = 'tvviem@blu.edu.vn';
-        $admin->password = bcrypt('secret');
+        $admin->password = bcrypt('123456');
         $admin->first_name = 'Viem';
         $admin->last_name = 'Trieu Vinh';
         $admin->active = true;
@@ -49,7 +49,7 @@ class UsersTableSeeder extends Seeder
         $lecturer = new User();
         $lecturer->username = 'tyyen';
         $lecturer->email = 'tyyen@blu.edu.vn';
-        $lecturer->password = bcrypt('secret');
+        $lecturer->password = bcrypt('123456');
         $lecturer->first_name = 'Yen';
         $lecturer->last_name = 'Trieu Yen';
         $lecturer->active = false;
@@ -61,7 +61,7 @@ class UsersTableSeeder extends Seeder
         $student = new User();
         $student->username = 'student';
         $student->email = 'student@blu.edu.vn';
-        $student->password = bcrypt('secret');
+        $student->password = bcrypt('123456');
         $student->first_name = 'student';
         $student->last_name = 'He is a';
         $student->active = false;

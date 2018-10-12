@@ -16,7 +16,8 @@ class PermissionsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Permission::get()->map(function($permission) {
+        // require comment all when execute first migrate 
+        /* Permission::get()->map(function($permission) {
             Gate::define($permission->slug, function($user) use ($permission){
                 return $user->hasPermissionTo($permission); 
             });
@@ -26,7 +27,7 @@ class PermissionsServiceProvider extends ServiceProvider
 	    });
 	    Blade::directive('endrole', function ($role){
 		    return "<?php endif; ?>";
-	    });
+	    }); */
     }
 
     /**

@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('last_name', 45); // họ va Lot: Trieu Vinh
             $table->string('work_place', 40)->nullable(); // họ: noi cong tac hoac lop
             $table->string('code', 14)->nullable(); // Mã sinh viên hoặc mã giảng viên
-            $table->string('path_avatar', 80)->default('profile.png'); // Tên tập tin hình ảnh
+            $table->string('path_avatar', 80)->nullable($value='profile.png'); // Tên tập tin hình ảnh
             
             $table->boolean('active')->default(false); // Kích hoạt chưa
             $table->string('activation_token', 100);

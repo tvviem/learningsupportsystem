@@ -4,14 +4,16 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Users Table</h3>
+                <h3 class="card-title">All Users</h3>
 
                 <div class="card-tools">
-                  <button class="btn btn-success" @click="newModal">
+                  <button class="btn btn-success" @click="newModal" title="Insert a special user">
                       Add New <i class="fas fa-user-plus fa-fw"></i></button>
+                  <button class="btn btn-primary" title="Import users from file">
+                      Import...  <i class="fas fa-users fa-fw"></i></button>
                 </div>
               </div>
-              <!-- /.card-header -->
+              <!-- card-header -->
               <div class="card-body table-responsive p-0">
                 <table class="table table-hover">
                   <tbody><tr>
@@ -134,15 +136,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="form-row" v-show="editmode">
-                        <div class="form-group col" v-for="role in roles" :key="role.id">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" :id="role.id" :value="role.slug" :checked="form.selected_roles.findIndex(roleUser=>roleUser.id===role.id)>=0?true:false">
-                                <input type="checkbox" class="form-check-input" :id="role.id" :value="role.slug" v-model="role.checked">
-                                <label class="form-check-label" :for="role.id">{{role.slug}}</label>
-                            </div>
-                        </div>
-                    </div> -->
                     <!-- Test 
                         <div class="form-row">
                         <span>role selected of Roles: {{ roles }} </span> <br>
@@ -304,7 +297,7 @@
             this.loadUsers();
             axios.get('/api/role').then(response => {
                 // this.form.selected_roles=response.data;
-                return response.data;
+                return response.data; // return to use in then (promise)
             })
             .then(allRoles => {
                 allRoles.forEach(role => {

@@ -37,8 +37,10 @@ Route::redirect('/here', '/there', 301);
     Route::get('/login');
 });
  */
-Auth::routes();
-Route::get('/', function (Request $request) {
+
+// Auth::routes();
+
+/* Route::get('/', function (Request $request) {
     if (!Auth::check()) {
         return view('auth.login');
     } 
@@ -70,4 +72,4 @@ Route::group(['middleware' => 'role:lecturer'], function() {
 Route::group(['middleware' => 'role:student'], function() {
     Route::get('/student-board', 'StudentController@index');
 });
-
+ */

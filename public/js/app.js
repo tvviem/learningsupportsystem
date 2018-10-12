@@ -71944,48 +71944,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -72013,7 +71971,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (this.form.password == '') {
                 this.form.password = undefined;
             }
-            this.form.put('../api/profile').then(function () {
+            this.form.put('/api/profile' + this.form.id).then(function () {
                 _this.$Progress.finish();
             }).catch(function () {
                 _this.$Progress.fail();
@@ -72045,7 +72003,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this3 = this;
 
-        axios.get('../api/profile').then(function (_ref) {
+        axios.get('/api/profile').then(function (_ref) {
             var data = _ref.data;
             return _this3.form.fill(data);
         });
@@ -72064,16 +72022,14 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _vm._m(0),
-      _vm._v(" "),
+    _c("div", { staticClass: "row justify-content-center mt-0" }, [
       _c("div", { staticClass: "col-md-12" }, [
         _c("div", { staticClass: "card" }, [
-          _vm._m(1),
+          _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c("div", { staticClass: "tab-content" }, [
-              _vm._m(2),
+              _vm._m(1),
               _vm._v(" "),
               _c(
                 "div",
@@ -72225,71 +72181,6 @@ var render = function() {
                             })
                           ],
                           1
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "form-group col-3" }, [
-                        _c(
-                          "div",
-                          { staticClass: "form-check form-check-inline" },
-                          [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.form.active,
-                                  expression: "form.active"
-                                }
-                              ],
-                              staticClass: "form-check-input",
-                              attrs: { type: "checkbox", id: "isActived" },
-                              domProps: {
-                                checked: Array.isArray(_vm.form.active)
-                                  ? _vm._i(_vm.form.active, null) > -1
-                                  : _vm.form.active
-                              },
-                              on: {
-                                change: function($event) {
-                                  var $$a = _vm.form.active,
-                                    $$el = $event.target,
-                                    $$c = $$el.checked ? true : false
-                                  if (Array.isArray($$a)) {
-                                    var $$v = null,
-                                      $$i = _vm._i($$a, $$v)
-                                    if ($$el.checked) {
-                                      $$i < 0 &&
-                                        _vm.$set(
-                                          _vm.form,
-                                          "active",
-                                          $$a.concat([$$v])
-                                        )
-                                    } else {
-                                      $$i > -1 &&
-                                        _vm.$set(
-                                          _vm.form,
-                                          "active",
-                                          $$a
-                                            .slice(0, $$i)
-                                            .concat($$a.slice($$i + 1))
-                                        )
-                                    }
-                                  } else {
-                                    _vm.$set(_vm.form, "active", $$c)
-                                  }
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "label",
-                              {
-                                staticClass: "form-check-label",
-                                attrs: { for: "isActived" }
-                              },
-                              [_vm._v("Actived")]
-                            )
-                          ]
                         )
                       ])
                     ]),
@@ -72572,76 +72463,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12" }, [
-      _c("div", { staticClass: "card card-widget widget-user" }, [
-        _c(
-          "div",
-          {
-            staticClass: "widget-user-header text-white",
-            staticStyle: { "background-image": "url('../img/user-cover.jpg')" }
-          },
-          [
-            _c("h3", { staticClass: "widget-user-username" }, [
-              _vm._v("Elizabeth Pierce")
-            ]),
-            _vm._v(" "),
-            _c("h5", { staticClass: "widget-user-desc" }, [
-              _vm._v("Web Designer")
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "widget-user-image" }, [
-          _c("img", {
-            staticClass: "img-circle",
-            attrs: { src: "", alt: "User Avatar" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-footer" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-sm-4 border-right" }, [
-              _c("div", { staticClass: "description-block" }, [
-                _c("h5", { staticClass: "description-header" }, [
-                  _vm._v("3,200")
-                ]),
-                _vm._v(" "),
-                _c("span", { staticClass: "description-text" }, [
-                  _vm._v("SALES")
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-sm-4 border-right" }, [
-              _c("div", { staticClass: "description-block" }, [
-                _c("h5", { staticClass: "description-header" }, [
-                  _vm._v("13,000")
-                ]),
-                _vm._v(" "),
-                _c("span", { staticClass: "description-text" }, [
-                  _vm._v("FOLLOWERS")
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-sm-4" }, [
-              _c("div", { staticClass: "description-block" }, [
-                _c("h5", { staticClass: "description-header" }, [_vm._v("35")]),
-                _vm._v(" "),
-                _c("span", { staticClass: "description-text" }, [
-                  _vm._v("PRODUCTS")
-                ])
-              ])
-            ])
-          ])
-        ])
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -73025,13 +72846,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -73192,7 +73006,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.loadUsers();
         axios.get('/api/role').then(function (response) {
             // this.form.selected_roles=response.data;
-            return response.data;
+            return response.data; // return to use in then (promise)
         }).then(function (allRoles) {
             allRoles.forEach(function (role) {
                 var roleCustom = { id: role.id, slug: role.slug, checked: false
@@ -73219,17 +73033,23 @@ var render = function() {
       _c("div", { staticClass: "col-md-12" }, [
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-header" }, [
-            _c("h3", { staticClass: "card-title" }, [_vm._v("Users Table")]),
+            _c("h3", { staticClass: "card-title" }, [_vm._v("All Users")]),
             _vm._v(" "),
             _c("div", { staticClass: "card-tools" }, [
               _c(
                 "button",
-                { staticClass: "btn btn-success", on: { click: _vm.newModal } },
+                {
+                  staticClass: "btn btn-success",
+                  attrs: { title: "Insert a special user" },
+                  on: { click: _vm.newModal }
+                },
                 [
                   _vm._v("\n                  Add New "),
                   _c("i", { staticClass: "fas fa-user-plus fa-fw" })
                 ]
-              )
+              ),
+              _vm._v(" "),
+              _vm._m(0)
             ])
           ]),
           _vm._v(" "),
@@ -73238,7 +73058,7 @@ var render = function() {
               _c(
                 "tbody",
                 [
-                  _vm._m(0),
+                  _vm._m(1),
                   _vm._v(" "),
                   _vm._l(_vm.users, function(user) {
                     return _c("tr", { key: user.id }, [
@@ -73316,7 +73136,7 @@ var render = function() {
                         _vm._v(_vm._s(_vm._f("showDate")(user.created_at)))
                       ]),
                       _vm._v(" "),
-                      _vm._m(1, true),
+                      _vm._m(2, true),
                       _vm._v(" "),
                       _c("td", [
                         _c(
@@ -73399,7 +73219,7 @@ var render = function() {
                   _vm._v(_vm._s(_vm.editmode ? "Update User Info" : "Add New"))
                 ]),
                 _vm._v(" "),
-                _vm._m(2)
+                _vm._m(3)
               ]),
               _vm._v(" "),
               _c(
@@ -73947,6 +73767,22 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        attrs: { title: "Import users from file" }
+      },
+      [
+        _vm._v("\n                  Import...  "),
+        _c("i", { staticClass: "fas fa-users fa-fw" })
+      ]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
