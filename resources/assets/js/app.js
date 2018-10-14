@@ -10,6 +10,16 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import moment from 'moment';
+import Buefy from 'buefy';
+Vue.use(Buefy);
+
+// event click open dropdown menu
+$(document).ready(function() {
+    $('button.dropdown').hover(function() {
+        $(this).toggleClass('is-open');
+    });
+})
+
 // Using beautiful alert
 import swal from 'sweetalert2';
 window.swal = swal;
@@ -62,7 +72,7 @@ const router = new VueRouter({
 
 window.Fire = new Vue();
 
-Vue.component(
+/* Vue.component(
     'passport-clients',
     require('./components/passport/Clients.vue')
 );
@@ -75,7 +85,7 @@ Vue.component(
 Vue.component(
     'passport-personal-access-tokens',
     require('./components/passport/PersonalAccessTokens.vue')
-);
+); */
 
 const app = new Vue({
     el: '#app',

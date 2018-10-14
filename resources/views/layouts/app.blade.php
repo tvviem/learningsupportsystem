@@ -22,68 +22,54 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav class="navbar has-shadow">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'LearningSS') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                <div class="navbar-brand">
+                    <a class="navbar-item">
+                        <img src="{{asset('images/logo_blu.png')}}" alt="BacLieu Learning Support Logo">
+                    </a>
+                    <a href="#" class="navbar-item is-tab is-hidden-mobile">Users</a>
+                    <a href="#" class="navbar-item is-tab is-hidden-mobile">Permissions</a>
+                    <a href="#" class="navbar-item is-tab is-hidden-mobile">Field &amp; Branches</a>
+                </div>
+                <div class="navbar-end">
+                    @if(!Auth::guest())
+                        <a href="{{route('login')}}" class="navbar-item is-tab">Login</a>
+                        <a href="#" class="navbar-item is-tab">Join the Community</a>
+                    @else
+                        <button class="dropdown is-aligned-right navbar-item is-tab">
+                            Hey Viem Trieu <span class="icon"><i class="fa fa-caret-down"></i></span>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
-                        @else
-                            @role('lecturer')
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#"> Giang vien </a>
-                                </li>
-                            @endrole
-                            @can('crud-test-code')
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#"> Create Test</a>
-                                </li>
-                            @endcan
-                            <li class="nav-item dropdown">
-                                
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->username }} <span class="caret"></span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">
+                                        <span class="icon"><i class="far fa-user-circle"></i></span> Profile
                                     </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="icon"><i class="far fa-bell"></i></span> Notifications
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="icon"><i class="fas fa-cog"></i></span> Settings
+                                    </a>
+                                </li>
+                                <li class="separator"></li>
+                                <li>
+                                    <a href="#">
+                                        <span class="icon"><i class="fas fa-sign-out-alt"></i></span> Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </button>
+                    @endif
                 </div>
             </div>
         </nav>
-
-        <main class="py-4">
-            @yield('content')
-        </main>
+        @yield('content')
     </div>
+
 </body>
 </html>

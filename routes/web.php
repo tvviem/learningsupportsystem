@@ -25,25 +25,20 @@ Route::any('foo', function () {
 Route::redirect('/here', '/there', 301);
 */
 
-//Route::view('/');
-/* Route::get('/', function () {
-    // Xet trang thai dang nhap va xu ly dieu huong giao dien layout 
-    // Tuong ung voi NHOM NGUOI DUNG
-    return view('auth.login');
-}); */
 // ------------------------------------------------------------------
 // Prevent Go Back on Browser
 /* Route::group(['middleware' => ['backop', 'auth']],function(){
     Route::get('/login');
 });
  */
+// Route::get('/', 'PagesController@index');
 
-// Auth::routes();
+Auth::routes();
 
-/* Route::get('/', function (Request $request) {
+Route::get('/', function (Request $request) {
     if (!Auth::check()) {
         return view('auth.login');
-    } 
+    }
     else {
         if ($request->user()->isAdmin()) {
             return redirect('/admin/dashboard');
@@ -55,7 +50,7 @@ Route::redirect('/here', '/there', 301);
     }
     return abort(404);
 });
-
+/*
 Route::group(['middleware' => 'role:admin', 'prefix' => 'admin'], function() {
     Route::get('/admin-board', 'AdminController@index');
     Route::get('/dashboard', 'AdminController@index'); // maybe change DashboardController to process

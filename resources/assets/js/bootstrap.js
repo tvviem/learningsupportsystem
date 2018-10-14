@@ -11,8 +11,8 @@ window.Popper = require('popper.js').default;
 try {
     window.$ = window.jQuery = require('jquery');
 
-    require('bootstrap');
-    require('admin-lte');
+    /* require('bootstrap');
+    require('admin-lte'); */
 } catch (e) {}
 
 /**
@@ -57,8 +57,8 @@ if (token) {
 // });
 
 // My Script ulti message include
-window.setTimeout(function() {
+/* window.setTimeout(function() {
     $(".alert").fadeTo(500, 0).slideUp(500, function(){
             $(this).remove(); 
         });
-    }, 4000);
+    }, 4000); */

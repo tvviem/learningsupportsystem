@@ -20,12 +20,12 @@ class RoleMiddleware
         if($user->isAdmin())
             return $next($request); */
         
-        if(!$request->user()->hasRole($roles)) {
+        /* if(!$request->user()->hasRole($roles)) {
             abort(404);
         }
         if($permission !== null && !$request->user()->can($permission)) {
             abort(404);
         }
-        return $next($request);
+        return $next($request); */
     }
 }
