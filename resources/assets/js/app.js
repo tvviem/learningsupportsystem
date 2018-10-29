@@ -6,6 +6,7 @@
  */
 
 require('./bootstrap');
+require('./util');
 
 window.Vue = require('vue');
 
@@ -13,13 +14,14 @@ import moment from 'moment';
 import Buefy from 'buefy';
 Vue.use(Buefy);
 
-// event click open dropdown menu
+// Open menu when mobile screen size
 $(document).ready(function() {
-    $('button.dropdown').hover(function() {
-        $(this).toggleClass('is-open');
+    // Check for click events on the navbar burger icon
+    $(".navbar-burger").click(function() {
+        $(".navbar-burger").toggleClass("is-active");
+        $(".navbar-menu").toggleClass("is-active");
     });
-})
-
+});
 // Using beautiful alert
 import swal from 'sweetalert2';
 window.swal = swal;

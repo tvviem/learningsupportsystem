@@ -31,13 +31,16 @@ Route::redirect('/here', '/there', 301);
     Route::get('/login');
 });
  */
-// Route::get('/', 'PagesController@index');
-
+Route::get('/', 'PagesController@index');
+Route::get('/guide', function() {
+    return view('pages.guide');
+});
 Auth::routes();
+Route::get('/admin-board', 'Admin\DashboardController@index');
 
-Route::get('/', function (Request $request) {
+/* Route::get('/', function (Request $request) {
     if (!Auth::check()) {
-        return view('auth.login');
+        return view('auth.signin');
     }
     else {
         if ($request->user()->isAdmin()) {
@@ -49,7 +52,7 @@ Route::get('/', function (Request $request) {
         }
     }
     return abort(404);
-});
+}); */
 /*
 Route::group(['middleware' => 'role:admin', 'prefix' => 'admin'], function() {
     Route::get('/admin-board', 'AdminController@index');

@@ -18,6 +18,7 @@ class CreateBranchesTable extends Migration
             $table->increments('id');
             $table->string('branch_name', 60)->unique();
             $table->string('branch_description', 120)->nullable();
+            $table->string('branch_image', 80)->nullable($value='no-image.png'); // Tên tập tin hình ảnh
             $table->integer('field_id')->unsigned();
             $table->integer('user_id')->unsigned();
 

@@ -18,12 +18,17 @@
     </div>
 @endif
 @if(session('warning'))
-    <div class="alert alert-dismissible alert-warning fade show">
+    <div class="notification is-warning">
+        <button class="delete" data-dismiss="notification" aria-label="Close"></button>
+        <strong> {!! session()->get('warning') !!} </strong>
+    </div>
+      
+    {{-- <div class="alert alert-dismissible alert-warning fade show">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-        <strong> {!! session()->get('warning') !!} </strong>
-    </div>
+        
+    </div> --}}
 @endif
 @if(session('error'))
     <div class="alert alert-dismissible alert-danger fade show">

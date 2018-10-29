@@ -1,0 +1,134 @@
+section #title {
+	// width: 600px;
+	// transform: rotateZ(-5deg);
+	& > h1 {
+		// color: brown;
+		line-height: 1.2em;
+	}
+}
+.column > .front-content {
+	position: absolute;
+	transform: perspective(500px) rotateY(0deg);
+	backface-visibility: hidden;
+	transition: transform .5s linear 0s;
+}
+.column > .back-content {
+	position: relative;
+	margin-top: 0;
+	transform: perspective(500px) rotateY(180deg);
+	backface-visibility: hidden;
+	transition: transform .5s linear 0s;
+}
+
+.column:hover > .front-content {
+	transform: perspective(500px) rotateY(-180deg);
+}
+.column:hover > .back-content {
+	transform: perspective(500px) rotateY(0deg);
+}
+
+/* Admin dashboard */
+.nav-tag{
+  padding-right: 30px;
+}
+// so luong thong bao den admin
+.tag-notif{
+  border-radius: 50%;
+  position: absolute;
+  top: 5px;
+  margin-left: 10px;
+  
+  @media (max-width: 768px) {
+    margin-left: -2px;
+  }
+}
+// navigation bar
+.navbar {
+	background: #2E363F;
+	
+	// style for navbar-item
+  &-item{
+    background-color: #2E363F;
+    color: #afb8c3 !important;
+    &.is-active{
+      background-color: #f5f5f5 !important;
+      color: #363636 !important;
+    }
+    &:hover {
+      background-color: #f5f5f5 !important;
+      color: #363636 !important;
+    }
+	}
+
+	// Style :hover for navbar-item image logo and slogan
+	.is--brand {
+    &:hover {
+      background-color: #2E363F !important;
+    }
+	}
+
+	/* &-brand-logo{
+    max-height: 3rem !important;
+    background-color: #fff;
+    border-radius: .25em;
+    padding: .25em;
+	} */
+
+	// Dropdown Logout and Profile Admin account
+	&-dropdown{
+    .navbar-item{
+      background-color: #fff;
+    }
+	}
+
+	&-burger{
+    background-color: #2E363F !important;
+    border: 0;
+    span{
+      background-color: #00d1b2;
+    }
+	}
+	
+	&-link{
+    figure{
+      img {
+        border-radius: 50%;
+        max-height: 2em;
+      }
+    }
+  }
+}
+
+.breadcrumb:not(:last-child){
+  margin-bottom: 0;
+}
+
+// navigation left area
+.aside {
+  background: #2E363F;    
+  padding: 2em .2em 0 1em;
+
+  a {
+    color: #afb8c3;
+  }
+
+  .menu-list {
+    li {
+      margin-top: .5em;
+    }
+  }
+}
+
+// main area
+.main {
+  padding: 2em 1em 0 1em;
+}
+
+.menu-label {
+  color: #00d1b2;
+  margin-left: .5em;
+}
+
+/* .block {
+  margin-top: .5em;
+} */
