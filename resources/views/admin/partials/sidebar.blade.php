@@ -1,4 +1,4 @@
-<aside class="column is-2 aside">
+<aside class="column is-2 aside has-background-grey-darker">
     <nav class="menu">
         <p class="menu-label">
             General

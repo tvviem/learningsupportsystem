@@ -1,19 +1,8 @@
-/* Sign In ui */
-/* sans-serif fonts for titles, heading */
-/* serif fonts for content
-* Both are generic family font. must place its at last value.
-*/
-
 html, body {
     font-family: Arial, 'Open Sans', sans-serif;
     font-size: 1em; // default 1em = 16px
     font-weight: 300; // 400 = normal; 700 = bold
     line-height: 1.5rem;
     height: 100%;
-    // background: #ECF0F3;
+    background: #ECF0F3;
 }
-/* .navbar-item {
-    &.brand-text {
-        font-weight: 700; // light
-    }
-} */

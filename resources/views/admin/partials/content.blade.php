@@ -1,4 +1,4 @@
-<main class="column main">
+<main class="column">
     <nav class="breadcrumb is-small" aria-label="breadcrumbs">
       <ul>
         <li><a href="#">Home</a></li>

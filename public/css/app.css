@@ -20441,14 +20441,6 @@ readers do not read off random characters that represent icons */
   font-weight: 400;
 }
 
-/* Sign In ui */
-
-/* sans-serif fonts for titles, heading */
-
-/* serif fonts for content
-* Both are generic family font. must place its at last value.
-*/
-
 html,
 body {
   font-family: Arial, 'Open Sans', sans-serif;
@@ -20456,13 +20448,8 @@ body {
   font-weight: 300;
   line-height: 1.5rem;
   height: 100%;
+  background: #ECF0F3;
 }
-
-/* .navbar-item {
-    &.brand-text {
-        font-weight: 700; // light
-    }
-} */
 
 .m-t-5 {
   margin-top: 5px !important;
@@ -21002,24 +20989,46 @@ section #title > h1 {
   }
 }
 
+.navbar11-item {
+  background-color: #2E363F;
+  color: #afb8c3 !important;
+  /* &.is-active{
+      background-color: #f5f5f5 !important;
+      color: #363636 !important;
+    } */
+}
+
+.navbar11-item:hover {
+  background-color: #f5f5f5 !important;
+  color: #363636 !important;
+}
+
+.navbar11-dropdown .navbar-item {
+  background-color: #fff;
+}
+
+.navbar11-burger {
+  background-color: #2E363F !important;
+  border: 0;
+}
+
+.navbar11-burger span {
+  background-color: #00d1b2;
+}
+
+.navbar11-link figure img {
+  border-radius: 50%;
+  max-height: 2em;
+}
+
 .navbar {
-  background: #2E363F;
-  /* &-brand-logo{
-    max-height: 3rem !important;
-    background-color: #fff;
-    border-radius: .25em;
-    padding: .25em;
-	} */
+  /* .navbar-dropdown {
+
+  } */
 }
 
 .navbar-item {
-  background-color: #2E363F;
-  color: #afb8c3 !important;
-}
-
-.navbar-item.is-active {
-  background-color: #f5f5f5 !important;
-  color: #363636 !important;
+  color: #e3e3e3;
 }
 
 .navbar-item:hover {
@@ -21027,26 +21036,16 @@ section #title > h1 {
   color: #363636 !important;
 }
 
-.navbar .is--brand:hover {
-  background-color: #2E363F !important;
-}
-
-.navbar-dropdown .navbar-item {
-  background-color: #fff;
-}
-
-.navbar-burger {
-  background-color: #2E363F !important;
-  border: 0;
+.navbar-item .navbar-link:hover {
+  color: #363636 !important;
 }
 
 .navbar-burger span {
   background-color: #00d1b2;
 }
 
-.navbar-link figure img {
-  border-radius: 50%;
-  max-height: 2em;
+.columns {
+  margin: 0;
 }
 
 .breadcrumb:not(:last-child) {
@@ -21054,8 +21053,7 @@ section #title > h1 {
 }
 
 .aside {
-  background: #2E363F;
-  padding: 2em .2em 0 1em;
+  padding: 1em .2em 0 0.8em;
 }
 
 .aside a {
@@ -21066,16 +21064,8 @@ section #title > h1 {
   margin-top: .5em;
 }
 
-.main {
-  padding: 2em 1em 0 1em;
-}
-
-.menu-label {
+.aside .menu-label {
   color: #00d1b2;
   margin-left: .5em;
 }
-
-/* .block {
-  margin-top: .5em;
-} */
 
